@@ -21,8 +21,7 @@ public class TestingTest extends AbstractTest {
     }
     mightyXProductPage.setLocationUSA();
     List<Product> products = mightyXProductPage.getProducts();
-    List<Product> productList = new ArrayList<>();
-    productList.forEach(System.out::println);
+    products.forEach(System.out::println);
   }
 
 }
