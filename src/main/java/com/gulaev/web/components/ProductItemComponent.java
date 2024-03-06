@@ -7,7 +7,6 @@ import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProductItemComponent extends AbstractUIObject {
 
@@ -26,16 +25,14 @@ public class ProductItemComponent extends AbstractUIObject {
   }
 
   public Product mapProductTitleAndRate() {
-    waitUntil(ExpectedConditions.elementToBeClickable(title), 10);
-    waitUntil(ExpectedConditions.elementToBeClickable(rate), 10);
-
     Product product = new Product();
-//    String currentRate = rate.isPresent() ? rate.getText() : "No rating";
-    String currentTitle = title.getText();
-
-//    product.setRating(currentRate);
-    product.setTitle(currentTitle);
     product.setAsin(getDateAsin());
+    String currentRate = rate.isPresent() ? rate.getText() : "No rating";
+    String currentTitle = title.getText();
+    product.setTitle(currentTitle);
+    String[] parts = currentRate.split(",", 2);
+    product.setStarRating(parts[0]);
+    product.setRateCount(parts[1]);
 
     return product;
   }
