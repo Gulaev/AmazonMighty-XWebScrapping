@@ -14,10 +14,17 @@ public class ProductItemComponent extends AbstractUIObject {
   private ExtendedWebElement title;
 
   @FindBy(xpath = ".//div[@class='a-row a-size-small']")
-  private ExtendedWebElement rate;
+  private ExtendedWebElement rateCount;
+
+  @FindBy(xpath = ".//div[@class='a-row a-size-small']//span[@aria-label and contains(@aria-label, 'out of 5 stars')]")
+  private ExtendedWebElement starRating;
 
   public ProductItemComponent(WebDriver driver, SearchContext searchContext) {
     super(driver, searchContext);
+  }
+
+  private String getStarRating() {
+    return starRating.getAttribute("aria-label");
   }
 
   private String getDateAsin() {
@@ -27,12 +34,12 @@ public class ProductItemComponent extends AbstractUIObject {
   public Product mapProductTitleAndRate() {
     Product product = new Product();
     product.setAsin(getDateAsin());
-    String currentRate = rate.isPresent() ? rate.getText() : "No rating";
+    String currentRateCount = rateCount.isPresent() ? rateCount.getText() : "No rating";
+    String currentStarRate = starRating.isPresent() ? getStarRating() : "No rating";
     String currentTitle = title.getText();
     product.setTitle(currentTitle);
-    String[] parts = currentRate.split(",", 2);
-    product.setStarRating(parts[0]);
-    product.setRateCount(parts[1]);
+    product.setStarRating(currentStarRate);
+    product.setRateCount(currentRateCount);
 
     return product;
   }

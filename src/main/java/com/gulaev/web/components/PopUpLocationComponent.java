@@ -1,6 +1,6 @@
 package com.gulaev.web.components;
 
-import com.gulaev.web.page.MightyXProductPage;
+import com.gulaev.web.page.AmazonProductsPage;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import org.openqa.selenium.JavascriptExecutor;
@@ -24,11 +24,12 @@ public class PopUpLocationComponent extends AbstractUIObject {
     super(driver, searchContext);
   }
 
-  public MightyXProductPage setUSALocation(String zipCode) {
+  public AmazonProductsPage setUSALocation(String zipCode) {
     zipCodeInput.type(zipCode);
     submitZipButton.click();
-    waitUntil(ExpectedConditions.elementToBeClickable(confirmCloseButton.getElement()), 10);
-    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", confirmCloseButton.getElement());
-    return new MightyXProductPage(driver);
+    waitUntil(ExpectedConditions.visibilityOf(confirmCloseButton.getElement()), 10);
+    ((JavascriptExecutor) driver).executeScript("arguments[0].click();",
+        confirmCloseButton.getElement());
+    return new AmazonProductsPage(driver);
   }
 }

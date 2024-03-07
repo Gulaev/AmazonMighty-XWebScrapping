@@ -10,5 +10,4 @@ public class Product {
   private String title;
   private String rateCount;
   private String asin;
-  private String link;
 }

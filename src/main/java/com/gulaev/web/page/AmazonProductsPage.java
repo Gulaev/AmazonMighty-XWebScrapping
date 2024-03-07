@@ -7,13 +7,12 @@ import com.gulaev.web.entity.Product;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class MightyXProductPage extends AbstractPage {
+public class AmazonProductsPage extends AbstractPage {
 
   @FindBy(xpath = "//div[@id='a-popover-content-2']")
   private PopUpLocationComponent popUpLocation;
@@ -30,18 +29,23 @@ public class MightyXProductPage extends AbstractPage {
   @FindBy(xpath = "//a[contains(@aria-label, 'Go to next page')]")
   private ExtendedWebElement goToNextPage;
 
-  public MightyXProductPage(WebDriver driver) {
+  public AmazonProductsPage(WebDriver driver) {
     super(driver);
+  }
+
+  @Override
+  public void openURL(String url) {
+    super.openURL(url);
   }
 
   public void clickToAmazonLogo() {
     amazonLogo.click();
   }
 
-  public void setLocationUSA() {
+  public void setLocation(String zipCode) {
     header.clickToChoiceLocationButton();
     waitUntil(ExpectedConditions.visibilityOf(popUpLocation.getRootExtendedElement()), 10);
-    popUpLocation.setUSALocation("97015");
+    popUpLocation.setUSALocation(zipCode);
   }
 
   public List<Product> getProducts() {
@@ -52,9 +56,9 @@ public class MightyXProductPage extends AbstractPage {
     return goToNextPage.isElementPresent();
   }
 
-  public MightyXProductPage goToNextPage() {
+  public AmazonProductsPage goToNextPage() {
     goToNextPage.click();
-    return new MightyXProductPage(getDriver());
+    return new AmazonProductsPage(getDriver());
   }
 
   public void scrollToNextPageButton() {
