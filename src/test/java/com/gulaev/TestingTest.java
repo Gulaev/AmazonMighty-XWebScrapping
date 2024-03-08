@@ -43,7 +43,7 @@ public class TestingTest extends AbstractTest {
       amazonProductsPage.clickToAmazonLogo();
       amazonProductsPage.openURL(MIGTHY_X_UK_URL);
     }
-    amazonProductsPage.setLocation("N12 7JJ");
+    amazonProductsPage.setLocation("E10 7");
     do {
       amazonProductsPage.scrollToNextPageButton();
       List<Product> products = amazonProductsPage.getProducts();
