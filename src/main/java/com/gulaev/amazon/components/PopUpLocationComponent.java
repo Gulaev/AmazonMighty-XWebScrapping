@@ -1,6 +1,6 @@
-package com.gulaev.web.components;
+package com.gulaev.amazon.components;
 
-import com.gulaev.web.page.AmazonProductsPage;
+import com.gulaev.amazon.page.AmazonProductsPage;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import org.openqa.selenium.JavascriptExecutor;

@@ -1,4 +1,4 @@
-package com.gulaev.web.entity;
+package com.gulaev.amazon.entity;
 
 import lombok.Data;
 

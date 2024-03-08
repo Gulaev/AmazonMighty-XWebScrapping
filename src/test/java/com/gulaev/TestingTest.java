@@ -1,7 +1,7 @@
 package com.gulaev;
 
-import com.gulaev.web.entity.Product;
-import com.gulaev.web.page.AmazonProductsPage;
+import com.gulaev.amazon.entity.Product;
+import com.gulaev.amazon.page.AmazonProductsPage;
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.R;
 import java.util.List;
@@ -41,11 +41,15 @@ public class TestingTest extends AbstractTest {
     AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
     amazonProductsPage.openURL(AMAZON_HOME_PAGE_UK);
     amazonProductsPage.openURL(MIGTHY_X_UK_URL);
+    amazonProductsPage.openURL(AMAZON_HOME_PAGE_UK);
+    amazonProductsPage.openURL(MIGTHY_X_UK_URL);
+
     if (amazonProductsPage.ifAmazonLogoPresent()) {
       amazonProductsPage.clickToAmazonLogo();
       amazonProductsPage.openURL(MIGTHY_X_UK_URL);
     }
     amazonProductsPage.setLocation("NW7 1SW");
+    amazonProductsPage.openURL(MIGTHY_X_UK_URL);
     do {
       amazonProductsPage.scrollToNextPageButton();
       List<Product> products = amazonProductsPage.getProducts();
