@@ -1,3 +1,4 @@
 target
 .idea
 reports
+src/main/resources/_testdata.properties

@@ -1,9 +1,9 @@
-package com.gulaev.web.page;
+package com.gulaev.amazon.page;
 
-import com.gulaev.web.components.HeaderComponent;
-import com.gulaev.web.components.PopUpLocationComponent;
-import com.gulaev.web.components.ProductItemComponent;
-import com.gulaev.web.entity.Product;
+import com.gulaev.amazon.components.HeaderComponent;
+import com.gulaev.amazon.components.PopUpLocationComponent;
+import com.gulaev.amazon.components.ProductItemComponent;
+import com.gulaev.amazon.entity.Product;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import java.util.List;
