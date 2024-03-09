@@ -61,4 +61,46 @@ public class TestingTest extends AbstractTest {
       }
     } while (true);
   }
+  @Test
+  public void getDataFromZoroms() {
+    AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
+    amazonProductsPage.openURL(ZOROMS_US_URL);
+    if (amazonProductsPage.ifAmazonLogoPresent()) {
+      amazonProductsPage.clickToAmazonLogo();
+      amazonProductsPage.openURL(ZOROMS_US_URL);
+    }
+    amazonProductsPage.setLocation("97015");
+    do {
+      amazonProductsPage.scrollToNextPageButton();
+      List<Product> products = amazonProductsPage.getProducts();
+      products.forEach(System.out::println);
+      if (amazonProductsPage.ifNextPageIsPresent()) {
+        amazonProductsPage = amazonProductsPage.goToNextPage();
+      } else {
+        break;
+      }
+    } while (true);
+  } @Test
+  public void getDataFromKivals() {
+    AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
+    amazonProductsPage.openURL(KIVALS_US_URL);
+    if (amazonProductsPage.ifAmazonLogoPresent()) {
+      amazonProductsPage.clickToAmazonLogo();
+      amazonProductsPage.openURL(KIVALS_US_URL);
+    }
+    amazonProductsPage.setLocation("97015");
+    do {
+      amazonProductsPage.scrollToNextPageButton();
+      List<Product> products = amazonProductsPage.getProducts();
+      products.forEach(System.out::println);
+      if (amazonProductsPage.ifNextPageIsPresent()) {
+        amazonProductsPage = amazonProductsPage.goToNextPage();
+      } else {
+        break;
+      }
+    } while (true);
+  }
 }
+
+
+
