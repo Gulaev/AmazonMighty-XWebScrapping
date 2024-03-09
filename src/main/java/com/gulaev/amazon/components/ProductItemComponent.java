@@ -4,6 +4,8 @@ import com.gulaev.amazon.entity.Product;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
+import java.time.LocalDate;
+import java.util.Date;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -40,6 +42,7 @@ public class ProductItemComponent extends AbstractUIObject {
     product.setTitle(currentTitle);
     product.setStarRating(currentStarRate);
     product.setRateCount(currentRateCount);
+    product.setUploadedOn(new Date());
 
     return product;
   }

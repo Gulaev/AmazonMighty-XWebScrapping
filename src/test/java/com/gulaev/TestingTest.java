@@ -1,9 +1,12 @@
 package com.gulaev;
 
+import com.gulaev.amazon.dao.implementation.ProductRepositoryImpl;
 import com.gulaev.amazon.entity.Product;
 import com.gulaev.amazon.page.AmazonProductsPage;
+import com.gulaev.amazon.service.ProductService;
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.R;
+import java.util.ArrayList;
 import java.util.List;
 import org.testng.annotations.Test;
 
@@ -17,6 +20,8 @@ public class TestingTest extends AbstractTest {
 
   @Test
   public void getDataFromMigthyXUS() {
+    ProductRepositoryImpl repository = new ProductRepositoryImpl();
+    ProductService productService = new ProductService();
     AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
     amazonProductsPage.openURL(MIGTHY_X_US_URL);
     if (amazonProductsPage.ifAmazonLogoPresent()) {
@@ -24,13 +29,16 @@ public class TestingTest extends AbstractTest {
       amazonProductsPage.openURL(MIGTHY_X_US_URL);
     }
     amazonProductsPage.setLocation("97015");
+    List<Product> products = new ArrayList<>();
     do {
       amazonProductsPage.scrollToNextPageButton();
-      List<Product> products = amazonProductsPage.getProducts();
+      List<Product> currentListProducts = amazonProductsPage.getProducts();
+      products.addAll(currentListProducts);
       products.forEach(System.out::println);
       if (amazonProductsPage.ifNextPageIsPresent()) {
         amazonProductsPage = amazonProductsPage.goToNextPage();
       } else {
+        productService.updateProduct(products);
         break;
       }
     } while (true);

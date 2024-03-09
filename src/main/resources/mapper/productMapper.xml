@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulaev.amazon.dao.repository.ProductRepository">
+
+  <insert id="createProduct" parameterType="com.gulaev.amazon.entity.Product">
+    INSERT INTO products (star_rating, title, rate_count, asin, uploaded_on)
+    VALUES (#{product.starRating}, #{product.title}, #{product.rateCount}, #{product.asin}, #{product.uploadedOn});
+  </insert>
+
+  <select id="getByAsin" parameterType="java.lang.String" resultType="com.gulaev.amazon.entity.Product">
+    SELECT * FROM products WHERE asin = #{asin}
+  </select>
+
+  <resultMap id="productResultMap" type="com.gulaev.amazon.entity.Product">
+    <id property="id" column="id" />
+    <result property="starRating" column="star_rating" />
+    <result property="title" column="title" />
+    <result property="rateCount" column="rate_count" />
+    <result property="asin" column="asin" />
+    <result property="uploadedOn" column="uploaded_on" />
+  </resultMap>
+
+  <select id="getByCurrentDate" resultMap="productResultMap">
+    SELECT * FROM products WHERE DATE(uploaded_on) = CURRENT_DATE
+  </select>
+
+  <delete id="deleteByCurrentDate">
+    DELETE FROM products WHERE DATE(uploaded_on) = CURRENT_DATE
+  </delete>
+
+  <insert id="insertProducts" parameterType="java.util.List">
+    INSERT INTO products (star_rating, title, rate_count, asin, uploaded_on)
+    VALUES
+    <foreach collection="list" item="product" separator=",">
+      (#{product.starRating}, #{product.title}, #{product.rateCount}, #{product.asin}, #{product.uploadedOn})
+    </foreach>
+  </insert>
+
+</mapper>
