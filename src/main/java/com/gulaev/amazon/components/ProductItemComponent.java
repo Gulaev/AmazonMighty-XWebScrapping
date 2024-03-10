@@ -4,7 +4,6 @@ import com.gulaev.amazon.entity.Product;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
-import java.time.LocalDate;
 import java.util.Date;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +32,7 @@ public class ProductItemComponent extends AbstractUIObject {
     return getRootExtendedElement().getAttribute("data-asin");
   }
 
-  public Product mapProductTitleAndRate() {
+  public Product mapProduct(String shopName) {
     Product product = new Product();
     product.setAsin(getDateAsin());
     String currentRateCount = rateCount.isPresent() ? rateCount.getText() : "No rating";
@@ -43,6 +42,7 @@ public class ProductItemComponent extends AbstractUIObject {
     product.setStarRating(currentStarRate);
     product.setRateCount(currentRateCount);
     product.setUploadedOn(new Date());
+    product.setShopName(shopName);
 
     return product;
   }

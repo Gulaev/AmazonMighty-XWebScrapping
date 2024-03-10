@@ -13,8 +13,8 @@ public class ProductService {
     this.productRepository = new ProductRepositoryImpl();
   }
 
-  public void updateProduct(List<Product> products) {
-      productRepository.deleteByCurrentDate();
+  public void updateProductByShop(List<Product> products, String shopName) {
+      productRepository.deleteByCurrentDateAndShopName(shopName);
       productRepository.insertProducts(products);
   }
 }

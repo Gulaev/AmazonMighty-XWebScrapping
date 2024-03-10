@@ -3,8 +3,8 @@
 <mapper namespace="com.gulaev.amazon.dao.repository.ProductRepository">
 
   <insert id="createProduct" parameterType="com.gulaev.amazon.entity.Product">
-    INSERT INTO products (star_rating, title, rate_count, asin, uploaded_on)
-    VALUES (#{product.starRating}, #{product.title}, #{product.rateCount}, #{product.asin}, #{product.uploadedOn});
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on)
+    VALUES (#{product.starRating}, #{product.title}, #{product.rateCount}, #{product.asin}, #{product.shopName}, #{product.uploadedOn});
   </insert>
 
   <select id="getByAsin" parameterType="java.lang.String" resultType="com.gulaev.amazon.entity.Product">
@@ -24,15 +24,18 @@
     SELECT * FROM products WHERE DATE(uploaded_on) = CURRENT_DATE
   </select>
 
-  <delete id="deleteByCurrentDate">
-    DELETE FROM products WHERE DATE(uploaded_on) = CURRENT_DATE
+  <delete id="deleteByCurrentDateAndShopName">
+    DELETE FROM products
+    WHERE DATE(uploaded_on) = CURRENT_DATE
+    AND shop_name = #{shopName}
   </delete>
 
+
   <insert id="insertProducts" parameterType="java.util.List">
-    INSERT INTO products (star_rating, title, rate_count, asin, uploaded_on)
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on)
     VALUES
     <foreach collection="list" item="product" separator=",">
-      (#{product.starRating}, #{product.title}, #{product.rateCount}, #{product.asin}, #{product.uploadedOn})
+      (#{product.starRating}, #{product.title}, #{product.rateCount}, #{product.asin}, #{product.shopName}, #{product.uploadedOn})
     </foreach>
   </insert>
 

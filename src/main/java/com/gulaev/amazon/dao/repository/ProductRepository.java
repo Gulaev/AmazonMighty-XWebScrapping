@@ -10,7 +10,7 @@ public interface ProductRepository {
 
   List<Product> getByCurrentDate();
 
-  void deleteByCurrentDate();
+  void deleteByCurrentDateAndShopName(@Param("shopName") String shopName);
 
   void insertProducts(@Param("list")List<Product> products);
 }

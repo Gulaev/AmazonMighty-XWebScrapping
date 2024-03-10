@@ -20,7 +20,7 @@ public class TestingTest extends AbstractTest {
 
   @Test
   public void getDataFromMigthyXUS() {
-    ProductRepositoryImpl repository = new ProductRepositoryImpl();
+    String shopName = "Migthy-X US";
     ProductService productService = new ProductService();
     AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
     amazonProductsPage.openURL(MIGTHY_X_US_URL);
@@ -32,13 +32,14 @@ public class TestingTest extends AbstractTest {
     List<Product> products = new ArrayList<>();
     do {
       amazonProductsPage.scrollToNextPageButton();
-      List<Product> currentListProducts = amazonProductsPage.getProducts();
+      List<Product> currentListProducts = amazonProductsPage
+          .getProductsAndSetShop(shopName);
       products.addAll(currentListProducts);
       products.forEach(System.out::println);
       if (amazonProductsPage.ifNextPageIsPresent()) {
         amazonProductsPage = amazonProductsPage.goToNextPage();
       } else {
-        productService.updateProduct(products);
+        productService.updateProductByShop(products, shopName);
         break;
       }
     } while (true);
@@ -46,6 +47,8 @@ public class TestingTest extends AbstractTest {
 
   @Test
   public void getDataFromMigthyXUK() {
+    ProductService productService = new ProductService();
+    String shopName = "Migthy-X UK";
     AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
     amazonProductsPage.openURL(AMAZON_HOME_PAGE_UK);
     amazonProductsPage.openURL(MIGTHY_X_UK_URL);
@@ -58,13 +61,17 @@ public class TestingTest extends AbstractTest {
     }
     amazonProductsPage.setLocation("NW7 1SW");
     amazonProductsPage.openURL(MIGTHY_X_UK_URL);
+    List<Product> products = new ArrayList<>();
     do {
       amazonProductsPage.scrollToNextPageButton();
-      List<Product> products = amazonProductsPage.getProducts();
+      List<Product> currentPageProducts = amazonProductsPage
+          .getProductsAndSetShop(shopName);
+      products.addAll(currentPageProducts);
       products.forEach(System.out::println);
       if (amazonProductsPage.ifNextPageIsPresent()) {
         amazonProductsPage = amazonProductsPage.goToNextPage();
       } else {
+        productService.updateProductByShop(products, shopName);
         break;
       }
     } while (true);
