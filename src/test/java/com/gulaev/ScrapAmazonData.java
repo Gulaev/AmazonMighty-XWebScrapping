@@ -1,6 +1,5 @@
 package com.gulaev;
 
-import com.gulaev.amazon.dao.implementation.ProductRepositoryImpl;
 import com.gulaev.amazon.entity.Product;
 import com.gulaev.amazon.page.AmazonProductsPage;
 import com.gulaev.amazon.service.ProductService;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.testng.annotations.Test;
 
-public class TestingTest extends AbstractTest {
+public class ScrapAmazonData extends AbstractTest {
 
   private final String MIGTHY_X_US_URL = R.CONFIG.get("urlMightyXUS");
   private final String MIGTHY_X_UK_URL = R.CONFIG.get("urlMightyXUK");
@@ -75,5 +74,60 @@ public class TestingTest extends AbstractTest {
         break;
       }
     } while (true);
+  }
+
+  @Test
+  public void getDataFromKivals() {
+    String shopName = "Kivals US";
+    ProductService productService = new ProductService();
+    AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
+    amazonProductsPage.openURL(KIVALS_US_URL);
+    if (amazonProductsPage.ifAmazonLogoPresent()) {
+      amazonProductsPage.clickToAmazonLogo();
+      amazonProductsPage.openURL(KIVALS_US_URL);
+    }
+    amazonProductsPage.setLocation("97015");
+    List<Product> products = new ArrayList<>();
+    do {
+      amazonProductsPage.scrollToNextPageButton();
+      List<Product> currentPageProducts = amazonProductsPage
+          .getProductsAndSetShop(shopName);
+      products.addAll(currentPageProducts);
+      products.forEach(System.out::println);
+      if (amazonProductsPage.ifNextPageIsPresent()) {
+        amazonProductsPage = amazonProductsPage.goToNextPage();
+      } else {
+        productService.updateProductByShop(products, shopName);
+        break;
+      }
+    } while (true);
+  }
+
+  @Test
+  public void getDataFromZoroms() {
+    String shopName = "Zoroms US";
+    ProductService productService = new ProductService();
+    AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
+    amazonProductsPage.openURL(ZOROMS_US_URL);
+    if (amazonProductsPage.ifAmazonLogoPresent()) {
+      amazonProductsPage.clickToAmazonLogo();
+      amazonProductsPage.openURL(ZOROMS_US_URL);
+    }
+    amazonProductsPage.setLocation("97015");
+    List<Product> products = new ArrayList<>();
+    do {
+      amazonProductsPage.scrollToNextPageButton();
+      List<Product> currentPageProducts = amazonProductsPage
+          .getProductsAndSetShop(shopName);
+      products.addAll(currentPageProducts);
+      products.forEach(System.out::println);
+      if (amazonProductsPage.ifNextPageIsPresent()) {
+        amazonProductsPage = amazonProductsPage.goToNextPage();
+      } else {
+        productService.updateProductByShop(products, shopName);
+        break;
+      }
+    } while (true);
+
   }
 }
