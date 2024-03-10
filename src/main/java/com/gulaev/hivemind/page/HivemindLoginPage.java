@@ -1,11 +1,11 @@
-package com.gulaev.hiveMind.page;
+package com.gulaev.hivemind.page;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-public class LoginPage extends AbstractPage {
+public class HivemindLoginPage extends AbstractPage {
 
   @FindBy(id = "email")
   private ExtendedWebElement inputEmailField;
@@ -16,8 +16,16 @@ public class LoginPage extends AbstractPage {
   @FindBy(xpath = "//button[@type='submit']")
   private ExtendedWebElement submitButton;
 
-  public LoginPage(WebDriver driver) {
+  public HivemindLoginPage(WebDriver driver) {
     super(driver);
+  }
+
+
+  public HIvemideHomePage login(String email, String password) {
+    inputEmailField.type(email);
+    inputPasswordField.type(password);
+    submitButton.click();
+    return new HIvemideHomePage(getDriver());
   }
 
 

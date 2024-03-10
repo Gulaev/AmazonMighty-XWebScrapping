@@ -3,7 +3,7 @@ package com.gulaev.amazon.page;
 import com.gulaev.amazon.components.HeaderComponent;
 import com.gulaev.amazon.components.PopUpLocationComponent;
 import com.gulaev.amazon.components.ProductItemComponent;
-import com.gulaev.amazon.entity.Product;
+import com.gulaev.amazon.entity.AmazonProduct;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import java.util.ArrayList;
@@ -49,12 +49,12 @@ public class AmazonProductsPage extends AbstractPage {
     popUpLocation.setUSALocation(zipCode);
   }
 
-  public List<Product> getProductsAndSetShop(String shopName) {
-    List<Product> productList = new ArrayList<>();
+  public List<AmazonProduct> getProductsAndSetShop(String shopName) {
+    List<AmazonProduct> amazonProductList = new ArrayList<>();
     for (ProductItemComponent product: products) {
-      productList.add(product.mapProduct(shopName));
+      amazonProductList.add(product.mapProduct(shopName));
     }
-    return productList;
+    return amazonProductList;
   }
 
   public boolean ifNextPageIsPresent() {

@@ -1,8 +1,8 @@
 package com.gulaev;
 
-import com.gulaev.amazon.entity.Product;
+import com.gulaev.amazon.entity.AmazonProduct;
 import com.gulaev.amazon.page.AmazonProductsPage;
-import com.gulaev.amazon.service.ProductService;
+import com.gulaev.amazon.service.AmazonProductService;
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.R;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class ScrapAmazonData extends AbstractTest {
   @Test
   public void getDataFromMigthyXUS() {
     String shopName = "Migthy-X US";
-    ProductService productService = new ProductService();
+    AmazonProductService amazonProductService = new AmazonProductService();
     AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
     amazonProductsPage.openURL(MIGTHY_X_US_URL);
     if (amazonProductsPage.ifAmazonLogoPresent()) {
@@ -28,17 +28,17 @@ public class ScrapAmazonData extends AbstractTest {
       amazonProductsPage.openURL(MIGTHY_X_US_URL);
     }
     amazonProductsPage.setLocation("97015");
-    List<Product> products = new ArrayList<>();
+    List<AmazonProduct> amazonProducts = new ArrayList<>();
     do {
       amazonProductsPage.scrollToNextPageButton();
-      List<Product> currentListProducts = amazonProductsPage
+      List<AmazonProduct> currentListAmazonProducts = amazonProductsPage
           .getProductsAndSetShop(shopName);
-      products.addAll(currentListProducts);
-      products.forEach(System.out::println);
+      amazonProducts.addAll(currentListAmazonProducts);
+      amazonProducts.forEach(System.out::println);
       if (amazonProductsPage.ifNextPageIsPresent()) {
         amazonProductsPage = amazonProductsPage.goToNextPage();
       } else {
-        productService.updateProductByShop(products, shopName);
+        amazonProductService.updateProductByShop(amazonProducts, shopName);
         break;
       }
     } while (true);
@@ -46,7 +46,7 @@ public class ScrapAmazonData extends AbstractTest {
 
   @Test
   public void getDataFromMigthyXUK() {
-    ProductService productService = new ProductService();
+    AmazonProductService amazonProductService = new AmazonProductService();
     String shopName = "Migthy-X UK";
     AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
     amazonProductsPage.openURL(AMAZON_HOME_PAGE_UK);
@@ -60,17 +60,17 @@ public class ScrapAmazonData extends AbstractTest {
     }
     amazonProductsPage.setLocation("NW7 1SW");
     amazonProductsPage.openURL(MIGTHY_X_UK_URL);
-    List<Product> products = new ArrayList<>();
+    List<AmazonProduct> amazonProducts = new ArrayList<>();
     do {
       amazonProductsPage.scrollToNextPageButton();
-      List<Product> currentPageProducts = amazonProductsPage
+      List<AmazonProduct> currentPageAmazonProducts = amazonProductsPage
           .getProductsAndSetShop(shopName);
-      products.addAll(currentPageProducts);
-      products.forEach(System.out::println);
+      amazonProducts.addAll(currentPageAmazonProducts);
+      amazonProducts.forEach(System.out::println);
       if (amazonProductsPage.ifNextPageIsPresent()) {
         amazonProductsPage = amazonProductsPage.goToNextPage();
       } else {
-        productService.updateProductByShop(products, shopName);
+        amazonProductService.updateProductByShop(amazonProducts, shopName);
         break;
       }
     } while (true);
@@ -79,7 +79,7 @@ public class ScrapAmazonData extends AbstractTest {
   @Test
   public void getDataFromKivals() {
     String shopName = "Kivals US";
-    ProductService productService = new ProductService();
+    AmazonProductService amazonProductService = new AmazonProductService();
     AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
     amazonProductsPage.openURL(KIVALS_US_URL);
     if (amazonProductsPage.ifAmazonLogoPresent()) {
@@ -87,17 +87,17 @@ public class ScrapAmazonData extends AbstractTest {
       amazonProductsPage.openURL(KIVALS_US_URL);
     }
     amazonProductsPage.setLocation("97015");
-    List<Product> products = new ArrayList<>();
+    List<AmazonProduct> amazonProducts = new ArrayList<>();
     do {
       amazonProductsPage.scrollToNextPageButton();
-      List<Product> currentPageProducts = amazonProductsPage
+      List<AmazonProduct> currentPageAmazonProducts = amazonProductsPage
           .getProductsAndSetShop(shopName);
-      products.addAll(currentPageProducts);
-      products.forEach(System.out::println);
+      amazonProducts.addAll(currentPageAmazonProducts);
+      amazonProducts.forEach(System.out::println);
       if (amazonProductsPage.ifNextPageIsPresent()) {
         amazonProductsPage = amazonProductsPage.goToNextPage();
       } else {
-        productService.updateProductByShop(products, shopName);
+        amazonProductService.updateProductByShop(amazonProducts, shopName);
         break;
       }
     } while (true);
@@ -106,7 +106,7 @@ public class ScrapAmazonData extends AbstractTest {
   @Test
   public void getDataFromZoroms() {
     String shopName = "Zoroms US";
-    ProductService productService = new ProductService();
+    AmazonProductService amazonProductService = new AmazonProductService();
     AmazonProductsPage amazonProductsPage = new AmazonProductsPage(getDriver());
     amazonProductsPage.openURL(ZOROMS_US_URL);
     if (amazonProductsPage.ifAmazonLogoPresent()) {
@@ -114,20 +114,19 @@ public class ScrapAmazonData extends AbstractTest {
       amazonProductsPage.openURL(ZOROMS_US_URL);
     }
     amazonProductsPage.setLocation("97015");
-    List<Product> products = new ArrayList<>();
+    List<AmazonProduct> amazonProducts = new ArrayList<>();
     do {
       amazonProductsPage.scrollToNextPageButton();
-      List<Product> currentPageProducts = amazonProductsPage
+      List<AmazonProduct> currentPageAmazonProducts = amazonProductsPage
           .getProductsAndSetShop(shopName);
-      products.addAll(currentPageProducts);
-      products.forEach(System.out::println);
+      amazonProducts.addAll(currentPageAmazonProducts);
+      amazonProducts.forEach(System.out::println);
       if (amazonProductsPage.ifNextPageIsPresent()) {
         amazonProductsPage = amazonProductsPage.goToNextPage();
       } else {
-        productService.updateProductByShop(products, shopName);
+        amazonProductService.updateProductByShop(amazonProducts, shopName);
         break;
       }
     } while (true);
-
   }
 }

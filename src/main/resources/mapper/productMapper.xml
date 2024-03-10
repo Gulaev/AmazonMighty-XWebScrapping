@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gulaev.amazon.dao.repository.ProductRepository">
+<mapper namespace="com.gulaev.amazon.dao.repository.AmazonProductRepository">
 
-  <insert id="createProduct" parameterType="com.gulaev.amazon.entity.Product">
-    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on)
-    VALUES (#{product.starRating}, #{product.title}, #{product.rateCount}, #{product.asin}, #{product.shopName}, #{product.uploadedOn});
+  <insert id="createProduct" parameterType="com.gulaev.amazon.entity.AmazonProduct">
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total)
+    VALUES (#{starRating}, #{title}, #{rateCount}, #{asin}, #{shopName}, #{uploadedOn}, #{unitsTotal});
   </insert>
 
-  <select id="getByAsin" parameterType="java.lang.String" resultType="com.gulaev.amazon.entity.Product">
+  <select id="getByAsin" parameterType="java.lang.String" resultType="com.gulaev.amazon.entity.AmazonProduct">
     SELECT * FROM products WHERE asin = #{asin}
   </select>
 
-  <resultMap id="productResultMap" type="com.gulaev.amazon.entity.Product">
+  <resultMap id="productResultMap" type="com.gulaev.amazon.entity.AmazonProduct">
     <id property="id" column="id" />
     <result property="starRating" column="star_rating" />
     <result property="title" column="title" />
     <result property="rateCount" column="rate_count" />
     <result property="asin" column="asin" />
     <result property="uploadedOn" column="uploaded_on" />
+    <result property="shopName" column="shop_name" />
+    <result property="unitsTotal" column="units_total" />
   </resultMap>
 
   <select id="getByCurrentDate" resultMap="productResultMap">
@@ -30,13 +32,20 @@
     AND shop_name = #{shopName}
   </delete>
 
-
   <insert id="insertProducts" parameterType="java.util.List">
-    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on)
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total)
     VALUES
-    <foreach collection="list" item="product" separator=",">
-      (#{product.starRating}, #{product.title}, #{product.rateCount}, #{product.asin}, #{product.shopName}, #{product.uploadedOn})
+    <foreach collection="list" item="amazonProduct" separator=",">
+      (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount}, #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn}, #{amazonProduct.unitsTotal})
     </foreach>
   </insert>
+
+  <!-- New statement to update units_total for items uploaded today -->
+  <update id="updateUnitsTotalByIdAndAsin">
+    UPDATE products
+    SET units_total = #{product.unitsTotal}
+    WHERE id = #{product.id}
+    AND asin = #{product.asin}
+  </update>
 
 </mapper>

@@ -1,6 +1,6 @@
 package com.gulaev.amazon.components;
 
-import com.gulaev.amazon.entity.Product;
+import com.gulaev.amazon.entity.AmazonProduct;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
@@ -32,18 +32,18 @@ public class ProductItemComponent extends AbstractUIObject {
     return getRootExtendedElement().getAttribute("data-asin");
   }
 
-  public Product mapProduct(String shopName) {
-    Product product = new Product();
-    product.setAsin(getDateAsin());
+  public AmazonProduct mapProduct(String shopName) {
+    AmazonProduct amazonProduct = new AmazonProduct();
+    amazonProduct.setAsin(getDateAsin());
     String currentRateCount = rateCount.isPresent() ? rateCount.getText() : "No rating";
     String currentStarRate = starRating.isPresent() ? getStarRating() : "No rating";
     String currentTitle = title.getText();
-    product.setTitle(currentTitle);
-    product.setStarRating(currentStarRate);
-    product.setRateCount(currentRateCount);
-    product.setUploadedOn(new Date());
-    product.setShopName(shopName);
+    amazonProduct.setTitle(currentTitle);
+    amazonProduct.setStarRating(currentStarRate);
+    amazonProduct.setRateCount(currentRateCount);
+    amazonProduct.setUploadedOn(new Date());
+    amazonProduct.setShopName(shopName);
 
-    return product;
+    return amazonProduct;
   }
 }

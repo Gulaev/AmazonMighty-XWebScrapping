@@ -4,7 +4,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class Product {
+public class AmazonProduct {
 
   private long id;
   private String starRating;
@@ -13,4 +13,5 @@ public class Product {
   private String asin;
   private String shopName;
   private Date uploadedOn;
+  private String unitsTotal;
 }
