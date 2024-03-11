@@ -13,7 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class AmazonProductsPage extends AbstractPage {
+public class AmazonMerchantItemsPage extends AbstractPage {
 
   @FindBy(xpath = "//div[@id='a-popover-content-2']")
   private PopUpLocationComponent popUpLocation;
@@ -30,7 +30,7 @@ public class AmazonProductsPage extends AbstractPage {
   @FindBy(xpath = "//a[contains(@aria-label, 'Go to next page')]")
   private ExtendedWebElement goToNextPage;
 
-  public AmazonProductsPage(WebDriver driver) {
+  public AmazonMerchantItemsPage(WebDriver driver) {
     super(driver);
   }
 
@@ -61,9 +61,9 @@ public class AmazonProductsPage extends AbstractPage {
     return goToNextPage.isElementPresent();
   }
 
-  public AmazonProductsPage goToNextPage() {
+  public AmazonMerchantItemsPage goToNextPage() {
     goToNextPage.click();
-    return new AmazonProductsPage(getDriver());
+    return new AmazonMerchantItemsPage(getDriver());
   }
 
   public void scrollToNextPageButton() {

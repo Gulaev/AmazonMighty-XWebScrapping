@@ -18,20 +18,29 @@ public class HiveMindScrapData extends AbstractTest {
   private final String EMAIL = R.TESTDATA.get("email");
   private final String PASSWORD = R.TESTDATA.get("password");
 
+
   @Test
-  public void scrapData(){
+  public void scrapData() {
     HivemindService hivemindService = new HivemindService();
     HivemindLoginPage hivemindLoginPage = new HivemindLoginPage(getDriver());
     hivemindLoginPage.openURL(HIVE_MIND_URL);
     HIvemideHomePage homePage = hivemindLoginPage.login(EMAIL, PASSWORD);
     List<HivemindItem> productItems = new ArrayList<>();
-    pause(10);
-    while (homePage.isNextPagePresent()) {
+
+    do {
       pause(5);
-      productItems.addAll(homePage.getProductItems().stream()
-          .map(HivemindProductItemComponent::mapItem).toList());
-      homePage.goToNextPage();
-    }
+      List<HivemindItem> itemsOnPage = homePage.getProductItems().stream()
+          .map(HivemindProductItemComponent::mapItem).toList();
+      productItems.addAll(itemsOnPage);
+
+      if (homePage.isNextPagePresent()) {
+        homePage.goToNextPage();
+        pause(5);
+      } else {
+        break;
+      }
+    } while (true);
+
     productItems.forEach(System.out::println);
     hivemindService.updateUnitsTotal(productItems);
     hivemindService.loadHiveMindItems(productItems);

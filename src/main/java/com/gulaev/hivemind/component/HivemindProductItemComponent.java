@@ -6,6 +6,7 @@ import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.NoSuchElementException;
 
 public class HivemindProductItemComponent extends AbstractUIObject {
 
@@ -28,8 +29,9 @@ public class HivemindProductItemComponent extends AbstractUIObject {
   public HivemindItem mapItem() {
     HivemindItem item = new HivemindItem();
     item.setAsin(asin.getText());
-    item.setUnitsTotal(unitsTotal.getText());
-    String productWrapContent = productWrap.getAttribute("textContent"); // or "innerHTML" based on what works best
+    String currentUnitsTotal = unitsTotal.isPresent() ? unitsTotal.getText() : "0";
+    item.setUnitsTotal(currentUnitsTotal);
+    String productWrapContent = productWrap.getAttribute("textContent");
     String marketplaceDomain = extractMarketplaceDomain(productWrapContent);
     item.setMarketplaceDomain(marketplaceDomain);
     return item;
