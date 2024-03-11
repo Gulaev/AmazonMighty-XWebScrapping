@@ -15,4 +15,8 @@ public interface AmazonProductRepository {
   void insertProducts(@Param("list")List<AmazonProduct> amazonProducts);
 
   void updateUnitsTotalByIdAndAsin(@Param("product") AmazonProduct product);
+
+  boolean existByCurrentDateAndAsin(@Param("asin") String asin);
+
+  void deleteByCurrentDateAndIfItemNameIsEmpty();
 }

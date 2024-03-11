@@ -47,4 +47,20 @@ public class AmazonProductRepositoryImpl implements AmazonProductRepository {
       mapper.updateUnitsTotalByIdAndAsin(product);
     }
   }
+
+  @Override
+  public boolean existByCurrentDateAndAsin(String asin) {
+    try (SqlSession sqlSession = Config.getSessionFactory().openSession(true)) {
+      AmazonProductRepository mapper = sqlSession.getMapper(AmazonProductRepository.class);
+      return mapper.existByCurrentDateAndAsin(asin);
+    }
+  }
+
+  @Override
+  public void deleteByCurrentDateAndIfItemNameIsEmpty() {
+    try (SqlSession sqlSession = Config.getSessionFactory().openSession(true)) {
+      AmazonProductRepository mapper = sqlSession.getMapper(AmazonProductRepository.class);
+      mapper.deleteByCurrentDateAndIfItemNameIsEmpty();
+    }
+  }
 }

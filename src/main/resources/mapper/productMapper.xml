@@ -48,4 +48,18 @@
     AND asin = #{product.asin}
   </update>
 
+  <select id="existByCurrentDateAndAsin" parameterType="java.lang.String" resultType="boolean">
+    SELECT EXISTS (
+    SELECT 1 FROM products
+    WHERE asin = #{asin}
+    AND DATE(uploaded_on) = CURRENT_DATE
+    )
+  </select>
+
+  <delete id="deleteByCurrentDateAndIfItemNameIsEmpty">
+    DELETE FROM products
+    WHERE (title IS NULL OR title = '')
+    AND DATE(uploaded_on) = CURRENT_DATE
+  </delete>
+
 </mapper>

@@ -34,6 +34,7 @@ public class HiveMindScrapData extends AbstractTest {
     }
     productItems.forEach(System.out::println);
     hivemindService.updateUnitsTotal(productItems);
+    hivemindService.loadHiveMindItems(productItems);
   }
 
 }

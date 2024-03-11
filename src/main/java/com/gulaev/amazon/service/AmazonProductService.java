@@ -25,4 +25,15 @@ public class AmazonProductService {
   public void updateUnitsTotal(List<AmazonProduct> amazonProducts) {
     amazonProducts.forEach(a -> amazonProductRepository.updateUnitsTotalByIdAndAsin(a));
   }
+
+  public boolean existByCurrentDateAndAsin(String asin) {
+    return amazonProductRepository.existByCurrentDateAndAsin(asin);
+  }
+
+  public void addAmazonProductsIfNotExist(List<AmazonProduct> product) {
+    amazonProductRepository.insertProducts(product);
+  }
+  public void deleteByCurrentDateAndIfItemNameIsEmpty() {
+    amazonProductRepository.deleteByCurrentDateAndIfItemNameIsEmpty();
+  }
 }
