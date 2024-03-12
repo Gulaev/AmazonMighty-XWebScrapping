@@ -7,10 +7,10 @@ import org.openqa.selenium.support.FindBy;
 
 public class AmazonProductPage extends AbstractPage {
 
-  @FindBy(xpath = "")
+  @FindBy(xpath = "//span[@id='productTitle']")
   private ExtendedWebElement title;
 
-  @FindBy(xpath = "")
+  @FindBy(xpath = "//div[@id='ppd']//span[@id='acrCustomerReviewText']")
   private ExtendedWebElement rateCount;
 
   @FindBy(xpath = "")

@@ -24,7 +24,7 @@ public class HiveMindScrapData extends AbstractTest {
     HivemindLoginPage hivemindLoginPage = new HivemindLoginPage(getDriver());
     hivemindLoginPage.openURL(HIVE_MIND_URL);
     HivemideHomePage homePage = hivemindLoginPage.login(EMAIL, PASSWORD);
-    homePage.choiceTodayData();
+//    homePage.choiceTodayData();
     List<HivemindItem> productItems = new ArrayList<>();
 
     do {
@@ -44,6 +44,12 @@ public class HiveMindScrapData extends AbstractTest {
     productItems.forEach(System.out::println);
     hivemindService.updateUnitsTotal(productItems);
     hivemindService.loadHiveMindItems(productItems);
+  }
+
+
+  @Test
+  public void scrapDataWhatNotInafe() {
+
   }
 
 }
