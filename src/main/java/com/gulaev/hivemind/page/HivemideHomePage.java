@@ -9,16 +9,23 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class HIvemideHomePage extends AbstractPage {
+public class HivemideHomePage extends AbstractPage {
 
   @FindBy(xpath = "//div[@class='card-body']//table//tbody//tr")
   private List<HivemindProductItemComponent> productItems;
 
+  @FindBy(xpath = "(//div[@class=\"date-time-picker\"])[1]")
+  private ExtendedWebElement choiceDateButton;
+
   @FindBy(xpath = "(//li[@class=\"page-item\"][.//a[contains(@class, 'page-link') and contains(text(), 'Next')]])[2]")
   private ExtendedWebElement nextPage;
 
-  public HIvemideHomePage(WebDriver driver) {
+  @FindBy(xpath = "(//div[@class='shortcuts-container'])[1]//span[contains(text(), 'Today')]")
+  private ExtendedWebElement todayButton;
+
+  public HivemideHomePage(WebDriver driver) {
     super(driver);
   }
 
@@ -30,10 +37,20 @@ public class HIvemideHomePage extends AbstractPage {
     nextPage.click();
   }
 
+
+  public HivemideHomePage choiceTodayData() {
+    choiceDateButton.click();
+    waitUntil(ExpectedConditions.visibilityOf(todayButton), 10);
+    todayButton.click();
+    return new HivemideHomePage(getDriver());
+  }
+
+
+
   public boolean isNextPagePresent() {
     try {
-      WebElement element = driver.findElement(By.xpath(
-          "(//li[@class=\"page-item\"][.//a[contains(@class, 'page-link') and contains(text(), 'Next')]])[2]"));
+      WebElement element = driver.findElement(
+          By.xpath("(//li[@class=\"page-item\"][.//a[contains(@class, 'page-link') and contains(text(), 'Next')]])[2]"));
       return true;
     } catch (NoSuchElementException e) {
       return false;

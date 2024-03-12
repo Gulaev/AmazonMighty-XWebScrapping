@@ -21,11 +21,11 @@ public class HivemindLoginPage extends AbstractPage {
   }
 
 
-  public HIvemideHomePage login(String email, String password) {
+  public HivemideHomePage login(String email, String password) {
     inputEmailField.type(email);
     inputPasswordField.type(password);
     submitButton.click();
-    return new HIvemideHomePage(getDriver());
+    return new HivemideHomePage(getDriver());
   }
 
 

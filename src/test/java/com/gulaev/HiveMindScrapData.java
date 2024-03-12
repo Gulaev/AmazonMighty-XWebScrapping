@@ -1,9 +1,8 @@
 package com.gulaev;
 
-import com.gulaev.amazon.entity.AmazonProduct;
 import com.gulaev.hivemind.component.HivemindProductItemComponent;
 import com.gulaev.hivemind.entity.HivemindItem;
-import com.gulaev.hivemind.page.HIvemideHomePage;
+import com.gulaev.hivemind.page.HivemideHomePage;
 import com.gulaev.hivemind.page.HivemindLoginPage;
 import com.gulaev.hivemind.service.HivemindService;
 import com.zebrunner.carina.core.AbstractTest;
@@ -24,7 +23,8 @@ public class HiveMindScrapData extends AbstractTest {
     HivemindService hivemindService = new HivemindService();
     HivemindLoginPage hivemindLoginPage = new HivemindLoginPage(getDriver());
     hivemindLoginPage.openURL(HIVE_MIND_URL);
-    HIvemideHomePage homePage = hivemindLoginPage.login(EMAIL, PASSWORD);
+    HivemideHomePage homePage = hivemindLoginPage.login(EMAIL, PASSWORD);
+    homePage.choiceTodayData();
     List<HivemindItem> productItems = new ArrayList<>();
 
     do {
