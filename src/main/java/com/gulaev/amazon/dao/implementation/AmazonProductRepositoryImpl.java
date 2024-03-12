@@ -49,6 +49,14 @@ public class AmazonProductRepositoryImpl implements AmazonProductRepository {
   }
 
   @Override
+  public void updateProductById(AmazonProduct product) {
+    try (SqlSession sqlSession = Config.getSessionFactory().openSession(true)) {
+      AmazonProductRepository mapper = sqlSession.getMapper(AmazonProductRepository.class);
+      mapper.updateProductById(product);
+    }
+  }
+
+  @Override
   public boolean existByCurrentDateAndAsin(String asin) {
     try (SqlSession sqlSession = Config.getSessionFactory().openSession(true)) {
       AmazonProductRepository mapper = sqlSession.getMapper(AmazonProductRepository.class);
@@ -61,6 +69,14 @@ public class AmazonProductRepositoryImpl implements AmazonProductRepository {
     try (SqlSession sqlSession = Config.getSessionFactory().openSession(true)) {
       AmazonProductRepository mapper = sqlSession.getMapper(AmazonProductRepository.class);
       mapper.deleteByCurrentDateAndIfItemNameIsEmpty();
+    }
+  }
+
+  @Override
+  public List<AmazonProduct> getProductsWhereTitleNullAndShopNameAndCurrentDate(String shopName) {
+    try (SqlSession sqlSession = Config.getSessionFactory().openSession(true)) {
+      AmazonProductRepository mapper = sqlSession.getMapper(AmazonProductRepository.class);
+      return mapper.getProductsWhereTitleNullAndShopNameAndCurrentDate(shopName);
     }
   }
 }

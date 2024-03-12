@@ -46,6 +46,7 @@
     SET units_total = #{product.unitsTotal}
     WHERE id = #{product.id}
     AND asin = #{product.asin}
+    AND DATE(uploaded_on) = CURRENT_DATE
   </update>
 
   <select id="existByCurrentDateAndAsin" parameterType="java.lang.String" resultType="boolean">
@@ -61,5 +62,24 @@
     WHERE (title IS NULL OR title = '')
     AND DATE(uploaded_on) = CURRENT_DATE
   </delete>
+
+  <select id="getProductsWhereTitleNullAndShopNameAndCurrentDate" parameterType="java.lang.String" resultMap="productResultMap">
+    SELECT * FROM products
+    WHERE title IS NULL
+    AND shop_name = #{shopName}
+    AND DATE(uploaded_on) = CURRENT_DATE
+  </select>
+
+  <update id="updateProductById" parameterType="com.gulaev.amazon.entity.AmazonProduct">
+    UPDATE products
+    SET star_rating = #{product.starRating},
+    title = #{product.title},
+    rate_count = #{product.rateCount},
+    asin = #{product.asin},
+    shop_name = #{product.shopName},
+    uploaded_on = #{product.uploadedOn},
+    units_total = #{product.unitsTotal}
+    WHERE id = #{product.id}
+  </update>
 
 </mapper>

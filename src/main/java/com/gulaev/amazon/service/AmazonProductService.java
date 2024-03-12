@@ -36,4 +36,12 @@ public class AmazonProductService {
   public void deleteByCurrentDateAndIfItemNameIsEmpty() {
     amazonProductRepository.deleteByCurrentDateAndIfItemNameIsEmpty();
   }
+
+  public List<AmazonProduct> getProductsWhereTitleNullAndShopName(String shopName) {
+   return amazonProductRepository.getProductsWhereTitleNullAndShopNameAndCurrentDate(shopName);
+  }
+
+  public void updateProduct(AmazonProduct product) {
+    amazonProductRepository.updateProductById(product);
+  }
 }

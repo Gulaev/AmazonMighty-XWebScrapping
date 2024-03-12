@@ -16,7 +16,11 @@ public interface AmazonProductRepository {
 
   void updateUnitsTotalByIdAndAsin(@Param("product") AmazonProduct product);
 
+  void updateProductById(@Param("product") AmazonProduct product);
+
   boolean existByCurrentDateAndAsin(@Param("asin") String asin);
 
   void deleteByCurrentDateAndIfItemNameIsEmpty();
+
+  List<AmazonProduct> getProductsWhereTitleNullAndShopNameAndCurrentDate(@Param("shopName") String shopName);
 }
