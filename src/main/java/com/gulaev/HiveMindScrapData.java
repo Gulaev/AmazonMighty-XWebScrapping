@@ -1,7 +1,6 @@
 package com.gulaev;
 
 import com.gulaev.amazon.entity.AmazonProduct;
-import com.gulaev.amazon.page.AmazonMerchantItemsPage;
 import com.gulaev.amazon.page.AmazonProductPage;
 import com.gulaev.amazon.service.AmazonProductService;
 import com.gulaev.hivemind.component.HivemindProductItemComponent;
@@ -25,10 +24,8 @@ public class HiveMindScrapData extends AbstractTest {
   private final String MIGTHY_X_UK_URL = R.CONFIG.get("urlMightyXUK");
   private final String KIVALS_US_URL = R.CONFIG.get("urlKivalsUS");
 
-
-
   @Test
-  public void scrapData() {
+  public void scrapDataHivemind() {
     HivemindService hivemindService = new HivemindService();
     HivemindLoginPage hivemindLoginPage = new HivemindLoginPage(getDriver());
     hivemindLoginPage.openURL(HIVE_MIND_URL);
@@ -53,7 +50,6 @@ public class HiveMindScrapData extends AbstractTest {
     //hivemindService.updateUnitsTotal(productItems);
     hivemindService.loadHiveMindItems(productItems);
   }
-
 
   @Test
   public void scrapDataFromAmazonUS() {
@@ -104,6 +100,4 @@ public class HiveMindScrapData extends AbstractTest {
       System.out.println("All products have already been scraped.");
     }
   }
-
-
 }

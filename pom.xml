@@ -5,8 +5,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.gulaev</groupId>
-  <artifactId>AmazonMighty-XWebScrapping</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <artifactId>Amazon_Scrapper</artifactId>
+  <version>1</version>
 
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
@@ -37,11 +37,6 @@
       <version>2.13.0</version>
     </dependency>
     <dependency>
-      <groupId>com.zebrunner</groupId>
-      <artifactId>carina-api</artifactId>
-      <version>${carina-api-version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
       <version>3.5.15</version>
@@ -54,20 +49,45 @@
   </dependencies>
 
   <build>
+
     <plugins>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>com.gulaev.Main</mainClass>
+            </manifest>
+          </archive>
+
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.2</version>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version> <!-- Specify the version you prefer -->
         <configuration>
-          <suiteXmlFiles>
-            <suiteXmlFile>src/test/resources/amazon-suite.xml</suiteXmlFile>
-          </suiteXmlFiles>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+              <mainClass>com.gulaev.Main</mainClass> <!-- Specify your main class here -->
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
   </build>
-
-
-
 </project>

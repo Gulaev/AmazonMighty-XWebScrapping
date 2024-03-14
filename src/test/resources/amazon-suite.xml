@@ -1,8 +1,22 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="ParallelTestSuite" parallel="methods" thread-count="4">
-  <test name="ScrapAmazonDataTest">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="AmazonMighty-XWebScrapping Suite" parallel="methods" thread-count="2">
+  <test name="Hivemind Scraping">
     <classes>
-      <class name="com.gulaev.ScrapAmazonData"/>
+      <class name="com.gulaev.HiveMindScrapData">
+        <methods>
+          <include name="scrapDataHivemind"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+  <test name="Amazon Scraping" parallel="methods" thread-count="2">
+    <classes>
+      <class name="com.gulaev.HiveMindScrapData">
+        <methods>
+          <include name="scrapDataFromAmazonUS"/>
+          <include name="scrapDataFromAmazonUK"/>
+        </methods>
+      </class>
     </classes>
   </test>
 </suite>
