@@ -22,9 +22,7 @@ public class HiveMindScrapData extends AbstractTest {
   private final String PASSWORD = R.TESTDATA.get("password");
   private final String AMAZON_HOME_PAGE_UK = R.CONFIG.get("urlUKAmazonHomePage");
   private final String AMAZON_HOME_PAGE = R.CONFIG.get("urlAmazonHomePage");
-  private final String MIGTHY_X_US_URL = R.CONFIG.get("urlMightyXUS");
   private final String MIGTHY_X_UK_URL = R.CONFIG.get("urlMightyXUK");
-  private final String ZOROMS_US_URL = R.CONFIG.get("urlZoromsUS");
   private final String KIVALS_US_URL = R.CONFIG.get("urlKivalsUS");
 
 
@@ -52,7 +50,7 @@ public class HiveMindScrapData extends AbstractTest {
     } while (true);
 
     productItems.forEach(System.out::println);
-    hivemindService.updateUnitsTotal(productItems);
+    //hivemindService.updateUnitsTotal(productItems);
     hivemindService.loadHiveMindItems(productItems);
   }
 

@@ -20,7 +20,7 @@ public interface AmazonProductRepository {
 
   boolean existByCurrentDateAndAsin(@Param("asin") String asin);
 
-  void deleteByCurrentDateAndIfItemNameIsEmpty();
+  void deleteByCurrentDate();
 
   List<AmazonProduct> getProductsWhereTitleNullAndShopNameAndCurrentDate(@Param("shopName") String shopName);
 }

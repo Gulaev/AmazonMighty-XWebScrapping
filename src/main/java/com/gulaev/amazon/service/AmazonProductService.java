@@ -33,8 +33,8 @@ public class AmazonProductService {
   public void addAmazonProductsIfNotExist(List<AmazonProduct> product) {
     amazonProductRepository.insertProducts(product);
   }
-  public void deleteByCurrentDateAndIfItemNameIsEmpty() {
-    amazonProductRepository.deleteByCurrentDateAndIfItemNameIsEmpty();
+  public void deleteByCurrentDate() {
+    amazonProductRepository.deleteByCurrentDate();
   }
 
   public List<AmazonProduct> getProductsWhereTitleNullAndShopName(String shopName) {

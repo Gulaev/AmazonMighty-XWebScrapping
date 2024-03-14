@@ -38,7 +38,7 @@ public class HivemindService {
 
 
   public void loadHiveMindItems(List<HivemindItem> hivemindItems) {
-    productService.deleteByCurrentDateAndIfItemNameIsEmpty();
+    productService.deleteByCurrentDate();
     List<AmazonProduct> products = new ArrayList<>();
     for (HivemindItem item: hivemindItems) {
       if (!productService.existByCurrentDateAndAsin(item.getAsin())) {

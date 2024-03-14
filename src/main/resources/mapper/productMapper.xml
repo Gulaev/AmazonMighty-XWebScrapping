@@ -57,10 +57,9 @@
     )
   </select>
 
-  <delete id="deleteByCurrentDateAndIfItemNameIsEmpty">
+  <delete id="deleteByCurrentDate">
     DELETE FROM products
-    WHERE (title IS NULL OR title = '')
-    AND DATE(uploaded_on) = CURRENT_DATE
+    WHERE DATE(uploaded_on) = CURRENT_DATE
   </delete>
 
   <select id="getProductsWhereTitleNullAndShopNameAndCurrentDate" parameterType="java.lang.String" resultMap="productResultMap">

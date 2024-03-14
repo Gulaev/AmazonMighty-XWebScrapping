@@ -65,10 +65,10 @@ public class AmazonProductRepositoryImpl implements AmazonProductRepository {
   }
 
   @Override
-  public void deleteByCurrentDateAndIfItemNameIsEmpty() {
+  public void deleteByCurrentDate() {
     try (SqlSession sqlSession = Config.getSessionFactory().openSession(true)) {
       AmazonProductRepository mapper = sqlSession.getMapper(AmazonProductRepository.class);
-      mapper.deleteByCurrentDateAndIfItemNameIsEmpty();
+      mapper.deleteByCurrentDate();
     }
   }
 
