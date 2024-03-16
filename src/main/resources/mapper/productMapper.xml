@@ -71,15 +71,15 @@
 
   <update id="updateProductById" parameterType="com.gulaev.amazon.entity.AmazonProduct">
     UPDATE products
-    SET star_rating = #{starRating},
-    title = #{title},
-    rate_count = #{rateCount},
-    asin = #{asin},
-    shop_name = #{shopName},
-    uploaded_on = #{uploadedOn},
-    units_total = #{unitsTotal},
-    price = #{price}
-    WHERE id = #{id}
+    SET star_rating = #{product.starRating},
+    title = #{product.title},
+    rate_count = #{product.rateCount},
+    asin = #{product.asin},
+    shop_name = #{product.shopName},
+    uploaded_on = #{product.uploadedOn},
+    units_total = #{product.unitsTotal},
+    price = #{product.price}
+    WHERE id = #{product.id}
   </update>
 
 </mapper>
