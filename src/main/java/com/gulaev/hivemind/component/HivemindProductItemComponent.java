@@ -34,19 +34,42 @@ public class HivemindProductItemComponent extends AbstractUIObject {
     String productWrapContent = productWrap.getAttribute("textContent");
     String marketplaceDomain = extractMarketplaceDomain(productWrapContent);
     item.setMarketplaceDomain(marketplaceDomain);
+    item.setPrice(extractPrice(productWrapContent));
     return item;
   }
 
   private String extractMarketplaceDomain(String productWrapContent) {
     if (productWrapContent.contains("Amazon")) {
       int startIndex = productWrapContent.indexOf("Amazon");
-      int endIndex = productWrapContent.indexOf("−", startIndex);
-      if (endIndex == -1) {
-        endIndex = productWrapContent.length();
+      int endIndex = productWrapContent.length();
+
+      if (productWrapContent.contains("$")) {
+        endIndex = productWrapContent.indexOf("$");
+      } else if (productWrapContent.contains("£")) {
+        endIndex = productWrapContent.indexOf("£");
       }
+      endIndex = endIndex-3;
       return productWrapContent.substring(startIndex, endIndex).trim();
     }
     return "";
   }
 
+  private String extractPrice(String productWrapContent) {
+    int startIndex = 0;
+    int endIndex = productWrapContent.length();
+
+    if (productWrapContent.contains("$")) {
+      startIndex = productWrapContent.indexOf("$");
+    } else if (productWrapContent.contains("£")) {
+      startIndex = productWrapContent.indexOf("£");
+    }
+
+    endIndex = productWrapContent.indexOf(" ", startIndex);
+    if (endIndex == -1) {
+      endIndex = productWrapContent.length();
+    }
+
+    return productWrapContent.substring(startIndex, endIndex).trim();
+  }
 }
+

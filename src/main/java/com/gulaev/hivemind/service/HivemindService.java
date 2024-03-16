@@ -20,16 +20,13 @@ public class HivemindService {
     List<AmazonProduct> amazonProducts = productService.getAmazonProductByCurrentDate();
     for (AmazonProduct amazonProduct : amazonProducts) {
       for (HivemindItem hivemindProduct : hivemindItems) {
-        // Check if ASINs match
         if (amazonProduct.getAsin().equals(hivemindProduct.getAsin())) {
-          // Specifically check for matching shop names and marketplace domains before updating
           if ((amazonProduct.getShopName().equals("Migthy-X US")
               && hivemindProduct.getMarketplaceDomain().equals("Amazon.com"))
               || (amazonProduct.getShopName().equals("Migthy-X UK")
               && hivemindProduct.getMarketplaceDomain().equals("Amazon.co.uk"))) {
             amazonProduct.setUnitsTotal(hivemindProduct.getUnitsTotal());
           }
-          // If more conditions needed, add else if blocks here
         }
       }
     }
@@ -47,6 +44,7 @@ public class HivemindService {
         product.setShopName(item.getMarketplaceDomain());
         product.setUploadedOn(new Date());
         product.setAsin(item.getAsin());
+        product.setPrice(item.getPrice());
         products.add(product);
       }
     }

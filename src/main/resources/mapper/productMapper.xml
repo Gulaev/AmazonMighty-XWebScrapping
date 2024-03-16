@@ -3,8 +3,8 @@
 <mapper namespace="com.gulaev.amazon.dao.repository.AmazonProductRepository">
 
   <insert id="createProduct" parameterType="com.gulaev.amazon.entity.AmazonProduct">
-    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total)
-    VALUES (#{starRating}, #{title}, #{rateCount}, #{asin}, #{shopName}, #{uploadedOn}, #{unitsTotal});
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total, price)
+    VALUES (#{starRating}, #{title}, #{rateCount}, #{asin}, #{shopName}, #{uploadedOn}, #{unitsTotal}, #{price});
   </insert>
 
   <select id="getByAsin" parameterType="java.lang.String" resultType="com.gulaev.amazon.entity.AmazonProduct">
@@ -20,6 +20,7 @@
     <result property="uploadedOn" column="uploaded_on" />
     <result property="shopName" column="shop_name" />
     <result property="unitsTotal" column="units_total" />
+    <result property="price" column="price" />
   </resultMap>
 
   <select id="getByCurrentDate" resultMap="productResultMap">
@@ -33,17 +34,16 @@
   </delete>
 
   <insert id="insertProducts" parameterType="java.util.List">
-    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total)
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total, price)
     VALUES
     <foreach collection="list" item="amazonProduct" separator=",">
-      (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount}, #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn}, #{amazonProduct.unitsTotal})
+      (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount}, #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn}, #{amazonProduct.unitsTotal}, #{amazonProduct.price})
     </foreach>
   </insert>
 
-  <!-- New statement to update units_total for items uploaded today -->
   <update id="updateUnitsTotalByIdAndAsin">
     UPDATE products
-    SET units_total = #{product.unitsTotal}
+    SET units_total = #{product.unitsTotal}, price = #{product.price}
     WHERE id = #{product.id}
     AND asin = #{product.asin}
     AND DATE(uploaded_on) = CURRENT_DATE
@@ -71,14 +71,15 @@
 
   <update id="updateProductById" parameterType="com.gulaev.amazon.entity.AmazonProduct">
     UPDATE products
-    SET star_rating = #{product.starRating},
-    title = #{product.title},
-    rate_count = #{product.rateCount},
-    asin = #{product.asin},
-    shop_name = #{product.shopName},
-    uploaded_on = #{product.uploadedOn},
-    units_total = #{product.unitsTotal}
-    WHERE id = #{product.id}
+    SET star_rating = #{starRating},
+    title = #{title},
+    rate_count = #{rateCount},
+    asin = #{asin},
+    shop_name = #{shopName},
+    uploaded_on = #{uploadedOn},
+    units_total = #{unitsTotal},
+    price = #{price}
+    WHERE id = #{id}
   </update>
 
 </mapper>
