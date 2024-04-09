@@ -1,17 +1,15 @@
 package com.gulaev.amazon.page;
 
-import com.gulaev.amazon.components.HeaderComponent;
-import com.gulaev.amazon.components.PopUpLocationComponent;
+
 import com.gulaev.amazon.components.ProductItemComponent;
 import com.gulaev.amazon.entity.AmazonProduct;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
 
 public class AmazonMerchantItemsPage extends AmazonHomePage {
 

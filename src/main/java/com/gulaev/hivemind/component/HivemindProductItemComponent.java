@@ -38,28 +38,23 @@ public class HivemindProductItemComponent extends AbstractUIObject {
     return item;
   }
 
-  private String extractMarketplaceDomain(String productWrapContent) {
-    if (productWrapContent.contains("Amazon")) {
-      int startIndex = productWrapContent.indexOf("Amazon");
-      int endIndex = productWrapContent.length();
-
-      if (productWrapContent.contains("$")) {
-        endIndex = productWrapContent.indexOf("$");
-      } else if (productWrapContent.contains("£")) {
-        endIndex = productWrapContent.indexOf("£");
-      }
-      endIndex = endIndex-3;
-      return productWrapContent.substring(startIndex, endIndex).trim();
+  public static String extractMarketplaceDomain(String productWrapContent) {
+    if (productWrapContent.contains("Amazon.co.uk")) {
+      return "Amazon.co.uk";
+    } else if (productWrapContent.contains("Amazon.com")) {
+      return "Amazon.com";
     }
     return "";
   }
 
-  private String extractPrice(String productWrapContent) {
+
+  public String extractPrice(String productWrapContent) {
     int startIndex = 0;
     int endIndex = productWrapContent.length();
 
     if (productWrapContent.contains("$")) {
       startIndex = productWrapContent.indexOf("$");
+
     } else if (productWrapContent.contains("£")) {
       startIndex = productWrapContent.indexOf("£");
     }
@@ -71,5 +66,6 @@ public class HivemindProductItemComponent extends AbstractUIObject {
 
     return productWrapContent.substring(startIndex, endIndex).trim();
   }
+
 }
 

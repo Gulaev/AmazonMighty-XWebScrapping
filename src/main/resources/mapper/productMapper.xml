@@ -3,8 +3,8 @@
 <mapper namespace="com.gulaev.amazon.dao.repository.AmazonProductRepository">
 
   <insert id="createProduct" parameterType="com.gulaev.amazon.entity.AmazonProduct">
-    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total, price)
-    VALUES (#{starRating}, #{title}, #{rateCount}, #{asin}, #{shopName}, #{uploadedOn}, #{unitsTotal}, #{price});
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total, price, shop_title)
+    VALUES (#{starRating}, #{title}, #{rateCount}, #{asin}, #{shopName}, #{uploadedOn}, #{unitsTotal}, #{price}, #{shopTitle});
   </insert>
 
   <select id="getByAsin" parameterType="java.lang.String" resultType="com.gulaev.amazon.entity.AmazonProduct">
@@ -21,6 +21,8 @@
     <result property="shopName" column="shop_name" />
     <result property="unitsTotal" column="units_total" />
     <result property="price" column="price" />
+    <result property="shopTitle" column="shop_title"/>
+    <result property="sheetLink" column="sheet_link"/>
   </resultMap>
 
   <select id="getByCurrentDate" resultMap="productResultMap">
@@ -34,10 +36,14 @@
   </delete>
 
   <insert id="insertProducts" parameterType="java.util.List">
-    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total, price)
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total,
+    price, shop_title, sheet_link)
     VALUES
     <foreach collection="list" item="amazonProduct" separator=",">
-      (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount}, #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn}, #{amazonProduct.unitsTotal}, #{amazonProduct.price})
+      (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount},
+      #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn},
+      #{amazonProduct.unitsTotal}, #{amazonProduct.price}, #{amazonProduct.shopTitle},
+      #{amazonProduct.sheetLink})
     </foreach>
   </insert>
 
@@ -78,7 +84,9 @@
     shop_name = #{product.shopName},
     uploaded_on = #{product.uploadedOn},
     units_total = #{product.unitsTotal},
-    price = #{product.price}
+    price = #{product.price},
+    shop_title = #{product.shopTitle},
+    sheet_link = #{product.sheetLink}
     WHERE id = #{product.id}
   </update>
 

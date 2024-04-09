@@ -1,18 +1,24 @@
 package com.gulaev.hivemind.service;
 
 import com.gulaev.amazon.entity.AmazonProduct;
+import com.gulaev.amazon.entity.SheetsLink;
 import com.gulaev.amazon.service.AmazonProductService;
+import com.gulaev.amazon.service.SheetsLinkService;
 import com.gulaev.hivemind.entity.HivemindItem;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class HivemindService {
 
   private AmazonProductService productService;
+  private SheetsLinkService sheetsLinkService;
 
   public HivemindService() {
     this.productService = new AmazonProductService();
+    this.sheetsLinkService = new SheetsLinkService();
   }
 
 
@@ -34,7 +40,7 @@ public class HivemindService {
   }
 
 
-  public void loadHiveMindItems(List<HivemindItem> hivemindItems) {
+  private void loadHiveMindItems(List<HivemindItem> hivemindItems) {
     productService.deleteByCurrentDate();
     List<AmazonProduct> products = new ArrayList<>();
     for (HivemindItem item: hivemindItems) {
@@ -49,5 +55,50 @@ public class HivemindService {
       }
     }
     productService.addAmazonProductsIfNotExist(products);
+  }
+
+  public void checkingReconciliationAndLoad(List<HivemindItem> productItems) {
+    List<HivemindItem> checkingItems = new ArrayList<>();
+    List<SheetsLink> sheetLinks = sheetsLinkService.getAll();
+    List<HivemindItem> usItems = productItems.stream()
+        .filter(i -> i.getMarketplaceDomain().equals("Amazon.com")).toList();
+    List<HivemindItem> ukItems = productItems.stream()
+        .filter(i -> i.getMarketplaceDomain().equals("Amazon.co.uk")).toList();
+    List<SheetsLink> sheetsLinksUK = sheetLinks.stream().filter(i -> i.getShopTitle()
+        .equals("Mighty-X UK")).toList();
+    List<SheetsLink> sheetsLinksUS = sheetLinks.stream().filter(i -> 
+        i.getShopTitle().equals("Mighty-X US") || i.getShopTitle().equals("ZOROM'S")
+        || i.getShopTitle().equals("Kivals")).toList();
+
+    for (SheetsLink link: sheetsLinksUS) {
+      for (HivemindItem item : usItems) {
+        if (item.getAsin().equals(link.getAsin()) && !checkingItems.contains(item)) {
+          checkingItems.add(item);
+        }
+      }
+    }
+    for (SheetsLink link: sheetsLinksUK) {
+      for (HivemindItem item : ukItems) {
+        if (item.getAsin().equals(link.getAsin()) && !checkingItems.contains(item)) {
+          checkingItems.add(item);
+        }
+      }
+    }
+    loadHiveMindItems(checkingItems);
+  }
+
+  private HivemindItem mapItem(SheetsLink sheetsLink) {
+    HivemindItem hivemindItem = new HivemindItem();
+    if (sheetsLink.getShopTitle().equals("Mighty-X US") ||
+        sheetsLink.getShopTitle().equals("ZOROM'S") ||
+        sheetsLink.getShopTitle().equals("Kivals")) {
+      hivemindItem.setMarketplaceDomain("Amazon.com");
+    } else {
+      hivemindItem.setMarketplaceDomain("Amazon.co.uk");
+    }
+    hivemindItem.setAsin(sheetsLink.getAsin());
+    hivemindItem.setPrice("Not found in Hivemind");
+    hivemindItem.setUnitsTotal("Not found in Hivemind");
+    return hivemindItem;
   }
 }

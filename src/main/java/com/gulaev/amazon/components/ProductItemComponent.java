@@ -32,6 +32,7 @@ public class ProductItemComponent extends AbstractUIObject {
     return getRootExtendedElement().getAttribute("data-asin");
   }
 
+
   public AmazonProduct mapProduct(String shopName) {
     AmazonProduct amazonProduct = new AmazonProduct();
     amazonProduct.setAsin(getDateAsin());
@@ -43,7 +44,6 @@ public class ProductItemComponent extends AbstractUIObject {
     amazonProduct.setRateCount(currentRateCount);
     amazonProduct.setUploadedOn(new Date());
     amazonProduct.setShopName(shopName);
-
     return amazonProduct;
   }
 }
