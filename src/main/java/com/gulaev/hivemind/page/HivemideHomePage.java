@@ -25,6 +25,8 @@ public class HivemideHomePage extends AbstractPage {
   @FindBy(xpath = "(//div[@class='shortcuts-container'])[1]//span[contains(text(), 'Today')]")
   private ExtendedWebElement todayButton;
 
+
+
   public HivemideHomePage(WebDriver driver) {
     super(driver);
   }
@@ -44,7 +46,6 @@ public class HivemideHomePage extends AbstractPage {
     todayButton.click();
     return new HivemideHomePage(getDriver());
   }
-
 
 
   public boolean isNextPagePresent() {

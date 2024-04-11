@@ -43,7 +43,7 @@ public class AmazonProductPage extends AmazonHomePage {
     product.setTitle(title.getText());
     product.setStarRating(getStarRating());
     String currentRateCount = rateCount.isPresent() ? rateCount.getText() : "No Rate Count";
-    product.setShopTitle(getShopTitle(product.getShopName()));
+//    product.setShopTitle(getShopTitle(product.getShopName()));
     product.setRateCount(currentRateCount);
     product.setSheetLink(sheetsLinkService.getSheetsLinkByAsinAndShopName(product.getAsin(),
         product.getShopTitle()));

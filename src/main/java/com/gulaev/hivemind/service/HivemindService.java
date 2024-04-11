@@ -51,6 +51,7 @@ public class HivemindService {
         product.setUploadedOn(new Date());
         product.setAsin(item.getAsin());
         product.setPrice(item.getPrice());
+        product.setShopTitle(item.getShopTitle());
         products.add(product);
       }
     }
@@ -73,6 +74,7 @@ public class HivemindService {
     for (SheetsLink link: sheetsLinksUS) {
       for (HivemindItem item : usItems) {
         if (item.getAsin().equals(link.getAsin()) && !checkingItems.contains(item)) {
+          item.setShopTitle(link.getShopTitle());
           checkingItems.add(item);
         }
       }
@@ -80,6 +82,7 @@ public class HivemindService {
     for (SheetsLink link: sheetsLinksUK) {
       for (HivemindItem item : ukItems) {
         if (item.getAsin().equals(link.getAsin()) && !checkingItems.contains(item)) {
+          item.setShopTitle(link.getShopTitle());
           checkingItems.add(item);
         }
       }
@@ -89,13 +92,13 @@ public class HivemindService {
 
   private HivemindItem mapItem(SheetsLink sheetsLink) {
     HivemindItem hivemindItem = new HivemindItem();
-    if (sheetsLink.getShopTitle().equals("Mighty-X US") ||
-        sheetsLink.getShopTitle().equals("ZOROM'S") ||
-        sheetsLink.getShopTitle().equals("Kivals")) {
+    String shopTitle = sheetsLink.getShopTitle();
+    if (shopTitle.equals("Mighty-X US") || shopTitle.equals("ZOROM'S") || shopTitle.equals("Kivals")) {
       hivemindItem.setMarketplaceDomain("Amazon.com");
     } else {
       hivemindItem.setMarketplaceDomain("Amazon.co.uk");
     }
+    hivemindItem.setShopTitle(shopTitle);
     hivemindItem.setAsin(sheetsLink.getAsin());
     hivemindItem.setPrice("Not found in Hivemind");
     hivemindItem.setUnitsTotal("Not found in Hivemind");
