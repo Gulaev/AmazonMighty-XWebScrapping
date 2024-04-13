@@ -7,6 +7,7 @@ import com.gulaev.amazon.service.SheetsLinkService;
 import com.gulaev.hivemind.entity.HivemindItem;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -79,11 +80,17 @@ public class HivemindService {
         }
       }
     }
-    for (SheetsLink link: sheetsLinksUK) {
+    Set<String> addedAsins = new HashSet<>(); // Track added ASINs to avoid duplicates
+
+    for (SheetsLink link : sheetsLinksUK) {
       for (HivemindItem item : ukItems) {
-        if (item.getAsin().equals(link.getAsin()) && !checkingItems.contains(item)) {
+        // Check if the item has been added already
+        if (!addedAsins.contains(item.getAsin()) && item.getAsin().equals(link.getAsin())) {
           item.setShopTitle(link.getShopTitle());
           checkingItems.add(item);
+          addedAsins.add(item.getAsin()); // Mark this ASIN as added
+          // If you only want to add one item per ASIN, you can break here
+          // break; // Uncomment this if each ASIN should only match once
         }
       }
     }

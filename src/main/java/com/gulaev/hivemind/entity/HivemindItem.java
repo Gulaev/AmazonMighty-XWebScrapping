@@ -21,12 +21,11 @@ public class HivemindItem {
       return false;
     }
     HivemindItem that = (HivemindItem) o;
-    return asin.equals(that.asin) && marketplaceDomain.equals(that.marketplaceDomain)
-        && shopTitle.equals(that.shopTitle);
+    return asin.equals(that.asin);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(asin, marketplaceDomain, shopTitle);
+    return Objects.hash(asin);
   }
 }
