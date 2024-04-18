@@ -3,8 +3,8 @@
 <mapper namespace="com.gulaev.amazon.dao.repository.AmazonProductRepository">
 
   <insert id="createProduct" parameterType="com.gulaev.amazon.entity.AmazonProduct">
-    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total, price, shop_title)
-    VALUES (#{starRating}, #{title}, #{rateCount}, #{asin}, #{shopName}, #{uploadedOn}, #{unitsTotal}, #{price}, #{shopTitle});
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total, price, shop_title, sessions)
+    VALUES (#{starRating}, #{title}, #{rateCount}, #{asin}, #{shopName}, #{uploadedOn}, #{unitsTotal}, #{price}, #{shopTitle}, #{sessions});
   </insert>
 
   <select id="getByAsin" parameterType="java.lang.String" resultType="com.gulaev.amazon.entity.AmazonProduct">
@@ -23,6 +23,7 @@
     <result property="price" column="price" />
     <result property="shopTitle" column="shop_title"/>
     <result property="sheetLink" column="sheet_link"/>
+    <result property="sessions" column="sessions"/>
   </resultMap>
 
   <select id="getByCurrentDate" resultMap="productResultMap">
@@ -37,13 +38,13 @@
 
   <insert id="insertProducts" parameterType="java.util.List">
     INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total,
-    price, shop_title, sheet_link)
+    price, shop_title, sheet_link, sessions)
     VALUES
     <foreach collection="list" item="amazonProduct" separator=",">
       (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount},
       #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn},
       #{amazonProduct.unitsTotal}, #{amazonProduct.price}, #{amazonProduct.shopTitle},
-      #{amazonProduct.sheetLink})
+      #{amazonProduct.sheetLink}, #{amazonProduct.sessions})
     </foreach>
   </insert>
 
@@ -75,6 +76,13 @@
     AND DATE(uploaded_on) = CURRENT_DATE
   </select>
 
+
+  <select id="getProductByDateAndShopTitle" resultMap="productResultMap">
+    SELECT * FROM products
+    WHERE DATE(uploaded_on) = #{date}
+    AND shop_title = #{shopTitle}
+  </select>
+
   <update id="updateProductById" parameterType="com.gulaev.amazon.entity.AmazonProduct">
     UPDATE products
     SET star_rating = #{product.starRating},
@@ -86,7 +94,8 @@
     units_total = #{product.unitsTotal},
     price = #{product.price},
     shop_title = #{product.shopTitle},
-    sheet_link = #{product.sheetLink}
+    sheet_link = #{product.sheetLink},
+    sessions = #{product.sessions}
     WHERE id = #{product.id}
   </update>
 

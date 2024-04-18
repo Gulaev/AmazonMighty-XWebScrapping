@@ -15,6 +15,7 @@
         <methods>
           <include name="scrapDataFromAmazonUS"/>
           <include name="scrapDataFromAmazonUK"/>
+          <include name="scrapSessions"/>
         </methods>
       </class>
     </classes>

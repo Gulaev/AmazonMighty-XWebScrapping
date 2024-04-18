@@ -3,6 +3,7 @@ package com.gulaev;
 import com.gulaev.amazon.entity.AmazonProduct;
 import com.gulaev.amazon.page.AmazonProductPage;
 import com.gulaev.amazon.service.AmazonProductService;
+import com.gulaev.amazonUnitsTotal.service.AmazonSessionService;
 import com.gulaev.hivemind.component.HivemindProductItemComponent;
 import com.gulaev.hivemind.entity.HivemindItem;
 import com.gulaev.hivemind.page.HivemideHomePage;
@@ -33,7 +34,7 @@ public class HiveMindScrapData extends AbstractTest {
     List<HivemindItem> productItems = new ArrayList<>();
 
     do {
-      pause(5);
+      pause(30);
       List<HivemindItem> itemsOnPage = homePage.getProductItems().stream()
           .map(HivemindProductItemComponent::mapItem).toList();
       productItems.addAll(itemsOnPage);
@@ -98,5 +99,12 @@ public class HiveMindScrapData extends AbstractTest {
     } else {
       System.out.println("All products have already been scraped.");
     }
+  }
+
+  @Test
+  public void scrapSessions() {
+    AmazonSessionService sessionService = new AmazonSessionService();
+    sessionService.getSessionForUS();
+    sessionService.getSessionForUK();
   }
 }

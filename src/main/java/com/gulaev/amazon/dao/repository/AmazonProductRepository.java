@@ -1,6 +1,7 @@
 package com.gulaev.amazon.dao.repository;
 
 import com.gulaev.amazon.entity.AmazonProduct;
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,6 @@ public interface AmazonProductRepository {
   void deleteByCurrentDate();
 
   List<AmazonProduct> getProductsWhereTitleNullAndShopNameAndCurrentDate(@Param("shopName") String shopName);
+
+  List<AmazonProduct> getProductByDateAndShopTitle(@Param("date")Date date, @Param("shopTitle")String shopTitle);
 }

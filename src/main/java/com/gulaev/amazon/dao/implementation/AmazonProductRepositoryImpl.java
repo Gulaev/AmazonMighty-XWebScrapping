@@ -3,6 +3,7 @@ package com.gulaev.amazon.dao.implementation;
 import com.gulaev.amazon.dao.config.Config;
 import com.gulaev.amazon.dao.repository.AmazonProductRepository;
 import com.gulaev.amazon.entity.AmazonProduct;
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
@@ -77,6 +78,14 @@ public class AmazonProductRepositoryImpl implements AmazonProductRepository {
     try (SqlSession sqlSession = Config.getSessionFactory().openSession(true)) {
       AmazonProductRepository mapper = sqlSession.getMapper(AmazonProductRepository.class);
       return mapper.getProductsWhereTitleNullAndShopNameAndCurrentDate(shopName);
+    }
+  }
+
+  @Override
+  public List<AmazonProduct> getProductByDateAndShopTitle(Date date, String shopTitle) {
+    try (SqlSession sqlSession = Config.getSessionFactory().openSession(true)) {
+      AmazonProductRepository mapper = sqlSession.getMapper(AmazonProductRepository.class);
+      return mapper.getProductByDateAndShopTitle(date, shopTitle);
     }
   }
 }
