@@ -1,8 +1,7 @@
-package com.gulaev.amazonUnitsTotal.service;
+package com.gulaev.amazonSessions.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gulaev.amazonUnitsTotal.entity.Report;
-import com.zebrunner.carina.utils.R;
+import com.gulaev.amazonSessions.entity.Report;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

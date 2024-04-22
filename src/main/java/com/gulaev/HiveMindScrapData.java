@@ -3,7 +3,7 @@ package com.gulaev;
 import com.gulaev.amazon.entity.AmazonProduct;
 import com.gulaev.amazon.page.AmazonProductPage;
 import com.gulaev.amazon.service.AmazonProductService;
-import com.gulaev.amazonUnitsTotal.service.AmazonSessionService;
+import com.gulaev.amazonSessions.service.AmazonSessionService;
 import com.gulaev.hivemind.component.HivemindProductItemComponent;
 import com.gulaev.hivemind.entity.HivemindItem;
 import com.gulaev.hivemind.page.HivemideHomePage;

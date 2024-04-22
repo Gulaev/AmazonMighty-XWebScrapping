@@ -1,4 +1,4 @@
-package com.gulaev.amazonUnitsTotal.entity;
+package com.gulaev.amazonSessions.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

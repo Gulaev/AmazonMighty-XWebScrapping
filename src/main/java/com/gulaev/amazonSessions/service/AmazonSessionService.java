@@ -1,12 +1,13 @@
-package com.gulaev.amazonUnitsTotal.service;
+package com.gulaev.amazonSessions.service;
 
 import com.gulaev.amazon.dao.implementation.AmazonProductRepositoryImpl;
 import com.gulaev.amazon.dao.repository.AmazonProductRepository;
 import com.gulaev.amazon.entity.AmazonProduct;
-import com.gulaev.amazonUnitsTotal.entity.Report;
-import com.gulaev.amazonUnitsTotal.entity.SalesAndTrafficByAsin;
+import com.gulaev.amazonSessions.entity.Report;
+import com.gulaev.amazonSessions.entity.SalesAndTrafficByAsin;
 import com.zebrunner.carina.utils.R;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +44,11 @@ public class AmazonSessionService {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
     try {
+      Calendar calendar = Calendar.getInstance();
       date = formatter.parse(dateString);
+      calendar.setTime(date);
+      calendar.add(Calendar.DATE, -1);
+      date = calendar.getTime();
       System.out.println("Date represented is: " + date);
     } catch (Exception e) {
       System.out.println("Error parsing date: " + e.getMessage());
@@ -71,11 +76,17 @@ public class AmazonSessionService {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
     try {
+      Calendar calendar = Calendar.getInstance();
       date = formatter.parse(dateString);
+      calendar.setTime(date);
+      calendar.add(Calendar.DATE, -1);
+      date = calendar.getTime();
       System.out.println("Date represented is: " + date);
     } catch (Exception e) {
       System.out.println("Error parsing date: " + e.getMessage());
     }
+
+
     List<AmazonProduct> productByDateAndShopTitle = productRepository.getProductByDateAndShopTitle(
         date, "Mighty-X US");
 //    System.out.println(salesAndTrafficByAsin.toArray().length);
