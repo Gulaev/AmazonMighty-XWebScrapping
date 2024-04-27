@@ -4,11 +4,11 @@
 
   <insert id="createProduct" parameterType="com.gulaev.amazon.entity.AmazonProduct">
     INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total,
-    price, shop_title, sheet_link, sessions, rank)
+    price, shop_title, sheet_link, sessions, rank, best_seller_rank)
     VALUES (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount},
     #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn},
     #{amazonProduct.unitsTotal}, #{amazonProduct.price}, #{amazonProduct.shopTitle},
-    #{amazonProduct.sheetLink}, #{amazonProduct.sessions}, #{amazonProduct.rank});
+    #{amazonProduct.sheetLink}, #{amazonProduct.sessions}, #{amazonProduct.rank}, #{amazonProduct.bestSellerRank});
   </insert>
 
   <select id="getByAsin" parameterType="java.lang.String" resultType="com.gulaev.amazon.entity.AmazonProduct">
@@ -29,6 +29,7 @@
     <result property="sheetLink" column="sheet_link"/>
     <result property="sessions" column="sessions"/>
     <result property="rank" column="rank"/>
+    <result property="bestSellerRank" column="best_seller_rank"/>
   </resultMap>
 
   <select id="getByCurrentDate" resultMap="productResultMap">
@@ -43,13 +44,14 @@
 
   <insert id="insertProducts" parameterType="java.util.List">
     INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total,
-    price, shop_title, sheet_link, sessions, rank)
+    price, shop_title, sheet_link, sessions, rank, best_seller_rank)
     VALUES
     <foreach collection="list" item="amazonProduct" separator=",">
       (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount},
       #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn},
       #{amazonProduct.unitsTotal}, #{amazonProduct.price}, #{amazonProduct.shopTitle},
-      #{amazonProduct.sheetLink}, #{amazonProduct.sessions}, #{amazonProduct.rank})
+      #{amazonProduct.sheetLink}, #{amazonProduct.sessions}, #{amazonProduct.rank},
+      #{amazonProduct.bestSellerRank})
     </foreach>
   </insert>
 
@@ -101,7 +103,8 @@
     shop_title = #{product.shopTitle},
     sheet_link = #{product.sheetLink},
     sessions = #{product.sessions},
-    rank = #{product.rank}
+    rank = #{product.rank},
+    best_seller_rank = #{product.bestSellerRank}
     WHERE id = #{product.id}
   </update>
 
