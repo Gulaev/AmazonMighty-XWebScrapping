@@ -36,7 +36,7 @@ public class AmazonProductPage extends AmazonHomePage {
   @FindBy(xpath = "//*[@id=\"detailBulletsWrapper_feature_div\"]//ul[@class=\"a-unordered-list a-nostyle a-vertical zg_hrsr\"]//span")
   private List<ExtendedWebElement> bestSellerRankUS;
 
-  @FindBy(xpath = "")
+  @FindBy(xpath = "//th[contains(text(), 'Best Sellers Rank')]/following-sibling::td")
   private List<ExtendedWebElement> bestSellerRankUK;
 
   public AmazonProductPage(WebDriver driver) {
