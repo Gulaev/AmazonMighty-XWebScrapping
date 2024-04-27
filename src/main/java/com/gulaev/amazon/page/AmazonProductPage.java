@@ -4,6 +4,7 @@ import com.gulaev.amazon.entity.AmazonProduct;
 import com.gulaev.amazon.service.AmazonProductService;
 import com.gulaev.amazon.service.SheetsLinkService;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -29,6 +30,15 @@ public class AmazonProductPage extends AmazonHomePage {
   @FindBy(xpath = "//div[@id=\"rightCol\"]//span[@class=\"a-offscreen\"][1]")
   private ExtendedWebElement price;
 
+  @FindBy(xpath = "//*[@id='zeitgeistBadge_feature_div']//i[@class='a-icon a-icon-addon p13n-best-seller-badge']")
+  private ExtendedWebElement rank;
+
+  @FindBy(xpath = "//*[@id=\"detailBulletsWrapper_feature_div\"]//ul[@class=\"a-unordered-list a-nostyle a-vertical zg_hrsr\"]//span")
+  private List<ExtendedWebElement> bestSellerRankUS;
+
+  @FindBy(xpath = "")
+  private List<ExtendedWebElement> bestSellerRankUK;
+
   public AmazonProductPage(WebDriver driver) {
     super(driver);
     this.productService = new AmazonProductService();
@@ -37,6 +47,32 @@ public class AmazonProductPage extends AmazonHomePage {
 
   private String getStarRating() {
     return starRating.isPresent() ? starRating.getAttribute("title") : "No Rating";
+  }
+
+  private String getRank() {
+    if (rank.isPresent()) {
+      return rank.getText();
+    } else {
+      return "No Rank";
+    }
+  }
+
+  private String getBestSellerRank() {
+    StringBuilder rankMessage = new StringBuilder();
+    if (!bestSellerRankUK.isEmpty()) {
+      for (ExtendedWebElement rank: bestSellerRankUK) {
+        rankMessage.append(rank.getText());
+        rankMessage.append("/n");
+      }
+    } else if (!bestSellerRankUS.isEmpty()) {
+      bestSellerRankUK.forEach(e -> {rankMessage.append(e.getText());
+      rankMessage.append("/n");});
+
+    } else {
+      rankMessage.append("No Rank");
+    }
+
+    return rankMessage.toString();
   }
 
   public AmazonProduct mapTitleAndRatingAndUpdate(AmazonProduct product) {
@@ -48,6 +84,8 @@ public class AmazonProductPage extends AmazonHomePage {
     product.setSheetLink(sheetsLinkService.getSheetsLinkByAsinAndShopName(product.getAsin(),
         product.getShopTitle()));
     product.setPrice(getPrice());
+    product.setRank(getRank());
+    product.setBestSellerRank(getBestSellerRank());
     productService.updateProduct(product);
     return product;
   }

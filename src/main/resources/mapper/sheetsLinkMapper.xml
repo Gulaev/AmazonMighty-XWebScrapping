@@ -14,7 +14,7 @@
     FROM sheets_links
     WHERE asin = #{asin} AND shop_title = #{shopTitle}
   </select>
-  
+
   <select id="getAll" resultMap="sheetsLinkResultMap">
     SELECT * FROM sheets_links
   </select>

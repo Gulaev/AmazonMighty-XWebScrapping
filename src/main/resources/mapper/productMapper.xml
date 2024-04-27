@@ -3,8 +3,8 @@
 <mapper namespace="com.gulaev.amazon.dao.repository.AmazonProductRepository">
 
   <insert id="createProduct" parameterType="com.gulaev.amazon.entity.AmazonProduct">
-    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total, price, shop_title, sessions)
-    VALUES (#{starRating}, #{title}, #{rateCount}, #{asin}, #{shopName}, #{uploadedOn}, #{unitsTotal}, #{price}, #{shopTitle}, #{sessions});
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total, price, shop_title, sessions, rank)
+    VALUES (#{starRating}, #{title}, #{rateCount}, #{asin}, #{shopName}, #{uploadedOn}, #{unitsTotal}, #{price}, #{shopTitle}, #{sessions}, #{rank});
   </insert>
 
   <select id="getByAsin" parameterType="java.lang.String" resultType="com.gulaev.amazon.entity.AmazonProduct">
@@ -24,6 +24,7 @@
     <result property="shopTitle" column="shop_title"/>
     <result property="sheetLink" column="sheet_link"/>
     <result property="sessions" column="sessions"/>
+    <result property="rank" column="rank"/>
   </resultMap>
 
   <select id="getByCurrentDate" resultMap="productResultMap">
@@ -38,13 +39,13 @@
 
   <insert id="insertProducts" parameterType="java.util.List">
     INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total,
-    price, shop_title, sheet_link, sessions)
+    price, shop_title, sheet_link, sessions, rank)
     VALUES
     <foreach collection="list" item="amazonProduct" separator=",">
       (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount},
       #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn},
       #{amazonProduct.unitsTotal}, #{amazonProduct.price}, #{amazonProduct.shopTitle},
-      #{amazonProduct.sheetLink}, #{amazonProduct.sessions})
+      #{amazonProduct.sheetLink}, #{amazonProduct.sessions}, #{amazonProduct.rank})
     </foreach>
   </insert>
 
@@ -95,7 +96,8 @@
     price = #{product.price},
     shop_title = #{product.shopTitle},
     sheet_link = #{product.sheetLink},
-    sessions = #{product.sessions}
+    sessions = #{product.sessions},
+    rank = #{product.rank}
     WHERE id = #{product.id}
   </update>
 

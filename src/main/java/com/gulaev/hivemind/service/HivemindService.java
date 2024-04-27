@@ -56,7 +56,8 @@ public class HivemindService {
         products.add(product);
       }
     }
-    productService.addAmazonProductsIfNotExist(products);
+    products.forEach(productService::createProduct);
+//    productService.addAmazonProductsIfNotExist(products);
   }
 
   public void checkingReconciliationAndLoad(List<HivemindItem> productItems) {
