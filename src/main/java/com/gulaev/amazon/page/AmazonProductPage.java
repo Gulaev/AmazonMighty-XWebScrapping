@@ -56,13 +56,13 @@ public class AmazonProductPage extends AmazonHomePage {
 
   private String getRank() {
     WebDriver driver = getDriver();
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));  // Increase timeout if necessary
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
     try {
       WebElement rankElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("rankElementId")));
       return rankElement.getText();
     } catch (TimeoutException e) {
-      return "No Rank";  // Element not present or not visible within the timeout
+      return "No Rank";
     }
   }
 
@@ -79,11 +79,9 @@ public class AmazonProductPage extends AmazonHomePage {
         rankMessage.append(rank.getText());
         rankMessage.append("/n");
       }
-
     } else {
       rankMessage.append("No Rank");
     }
-
     return rankMessage.toString();
   }
 
@@ -107,31 +105,29 @@ public class AmazonProductPage extends AmazonHomePage {
     return product;
   }
 
-  private String getShopTitle(String shopName) {
-    String text = shopTitle.getText();
-    if (text.contains("ZOROM'S")) {
-      return "ZOROM'S";
-    } else if (text.contains("Mighty")) {
-      if (shopName.equals("Amazon.com")) {
-        return "Mighty-X US";
-      } else if (shopName.equals("Amazon.co.uk")) {
-        return "Mighty-X UK";
-      }
-    } else if (text.contains("MYHELP")) {
-      return "Kivals";
-    }
-    return "";
-  }
+//  private String getShopTitle(String shopName) {
+//    String text = shopTitle.getText();
+//    if (text.contains("ZOROM'S")) {
+//      return "ZOROM'S";
+//    } else if (text.contains("Mighty")) {
+//      if (shopName.equals("Amazon.com")) {
+//        return "Mighty-X US";
+//      } else if (shopName.equals("Amazon.co.uk")) {
+//        return "Mighty-X UK";
+//      }
+//    } else if (text.contains("MYHELP")) {
+//      return "Kivals";
+//    }
+//    return "";
+//  }
 
   public String getPrice() {
-    // Execute JavaScript to get the text of the element
     JavascriptExecutor jsExecutor = (JavascriptExecutor) getDriver();
     String price = (String) jsExecutor.executeScript(
         "return arguments[0].textContent.trim();",
         findExtendedWebElement(
             By.xpath("//div[@id=\"rightCol\"]//span[@class=\"a-offscreen\"][1]"))
             .getElement());
-    // Return the price
     return price;
   }
 
