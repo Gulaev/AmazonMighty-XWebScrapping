@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulaev.amazon.dao.repository.AmazonProductRepository">
+
+  <insert id="createProduct" parameterType="com.gulaev.amazon.entity.AmazonProduct">
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total,
+    price, shop_title, sheet_link, sessions, rank, best_seller_rank)
+    VALUES (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount},
+    #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn},
+    #{amazonProduct.unitsTotal}, #{amazonProduct.price}, #{amazonProduct.shopTitle},
+    #{amazonProduct.sheetLink}, #{amazonProduct.sessions}, #{amazonProduct.rank}, #{amazonProduct.bestSellerRank});
+  </insert>
+
+  <select id="getByAsin" parameterType="java.lang.String" resultType="com.gulaev.amazon.entity.AmazonProduct">
+    SELECT * FROM products WHERE asin = #{asin}
+  </select>
+
+  <resultMap id="productResultMap" type="com.gulaev.amazon.entity.AmazonProduct">
+    <id property="id" column="id" />
+    <result property="starRating" column="star_rating" />
+    <result property="title" column="title" />
+    <result property="rateCount" column="rate_count" />
+    <result property="asin" column="asin" />
+    <result property="uploadedOn" column="uploaded_on" />
+    <result property="shopName" column="shop_name" />
+    <result property="unitsTotal" column="units_total" />
+    <result property="price" column="price" />
+    <result property="shopTitle" column="shop_title"/>
+    <result property="sheetLink" column="sheet_link"/>
+    <result property="sessions" column="sessions"/>
+    <result property="rank" column="rank"/>
+    <result property="bestSellerRank" column="best_seller_rank"/>
+  </resultMap>
+
+  <select id="getByCurrentDate" resultMap="productResultMap">
+    SELECT * FROM products WHERE DATE(uploaded_on) = CURRENT_DATE
+  </select>
+
+  <delete id="deleteByCurrentDateAndShopName">
+    DELETE FROM products
+    WHERE DATE(uploaded_on) = CURRENT_DATE
+    AND shop_name = #{shopName}
+  </delete>
+
+  <insert id="insertProducts" parameterType="java.util.List">
+    INSERT INTO products (star_rating, title, rate_count, asin, shop_name, uploaded_on, units_total,
+    price, shop_title, sheet_link, sessions, rank, best_seller_rank)
+    VALUES
+    <foreach collection="list" item="amazonProduct" separator=",">
+      (#{amazonProduct.starRating}, #{amazonProduct.title}, #{amazonProduct.rateCount},
+      #{amazonProduct.asin}, #{amazonProduct.shopName}, #{amazonProduct.uploadedOn},
+      #{amazonProduct.unitsTotal}, #{amazonProduct.price}, #{amazonProduct.shopTitle},
+      #{amazonProduct.sheetLink}, #{amazonProduct.sessions}, #{amazonProduct.rank},
+      #{amazonProduct.bestSellerRank})
+    </foreach>
+  </insert>
+
+  <update id="updateUnitsTotalByIdAndAsin">
+    UPDATE products
+    SET units_total = #{product.unitsTotal}, price = #{product.price}
+    WHERE id = #{product.id}
+    AND asin = #{product.asin}
+    AND DATE(uploaded_on) = CURRENT_DATE
+  </update>
+
+  <select id="existByCurrentDateAndAsin" parameterType="java.lang.String" resultType="boolean">
+    SELECT EXISTS (
+    SELECT 1 FROM products
+    WHERE asin = #{asin}
+    AND DATE(uploaded_on) = CURRENT_DATE
+    )
+  </select>
+
+  <delete id="deleteByCurrentDate">
+    DELETE FROM products
+    WHERE DATE(uploaded_on) = CURRENT_DATE
+  </delete>
+
+  <select id="getProductsWhereTitleNullAndShopNameAndCurrentDate" parameterType="java.lang.String" resultMap="productResultMap">
+    SELECT * FROM products
+    WHERE title IS NULL
+    AND shop_name = #{shopName}
+    AND DATE(uploaded_on) = CURRENT_DATE
+  </select>
+
+
+  <select id="getProductByDateAndShopTitle" resultMap="productResultMap">
+    SELECT * FROM products
+    WHERE DATE(uploaded_on) = #{date}
+    AND shop_title = #{shopTitle}
+  </select>
+
+  <update id="updateProductById" parameterType="com.gulaev.amazon.entity.AmazonProduct">
+    UPDATE products
+    SET star_rating = #{product.starRating},
+    title = #{product.title},
+    rate_count = #{product.rateCount},
+    asin = #{product.asin},
+    shop_name = #{product.shopName},
+    uploaded_on = #{product.uploadedOn},
+    units_total = #{product.unitsTotal},
+    price = #{product.price},
+    shop_title = #{product.shopTitle},
+    sheet_link = #{product.sheetLink},
+    sessions = #{product.sessions},
+    rank = #{product.rank},
+    best_seller_rank = #{product.bestSellerRank}
+    WHERE id = #{product.id}
+  </update>
+
+</mapper>

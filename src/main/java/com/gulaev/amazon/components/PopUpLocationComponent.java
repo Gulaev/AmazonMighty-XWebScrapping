@@ -1,6 +1,6 @@
-package com.gulaev.web.components;
+package com.gulaev.amazon.components;
 
-import com.gulaev.web.page.AmazonProductsPage;
+import com.gulaev.amazon.page.AmazonMerchantItemsPage;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import org.openqa.selenium.JavascriptExecutor;
@@ -24,12 +24,12 @@ public class PopUpLocationComponent extends AbstractUIObject {
     super(driver, searchContext);
   }
 
-  public AmazonProductsPage setUSALocation(String zipCode) {
+  public AmazonMerchantItemsPage setUSALocation(String zipCode) {
     zipCodeInput.type(zipCode);
     submitZipButton.click();
     waitUntil(ExpectedConditions.visibilityOf(confirmCloseButton.getElement()), 10);
     ((JavascriptExecutor) driver).executeScript("arguments[0].click();",
         confirmCloseButton.getElement());
-    return new AmazonProductsPage(driver);
+    return new AmazonMerchantItemsPage(driver);
   }
 }
