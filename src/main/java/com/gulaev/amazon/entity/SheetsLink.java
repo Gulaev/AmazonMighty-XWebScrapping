@@ -10,6 +10,7 @@ public class SheetsLink {
   private String asin;
   private String shopTitle;
   private String sheetLink;
+  private String srTitle;
 
   @Override
   public boolean equals(Object o) {

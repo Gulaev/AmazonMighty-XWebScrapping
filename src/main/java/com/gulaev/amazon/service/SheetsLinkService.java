@@ -22,6 +22,14 @@ public class SheetsLinkService {
       System.out.println("Not link found");
       return "";
     }
+  }  public SheetsLink getLinkByAsinAndShopTitle(String asin, String shopTitle) {
+    Optional<SheetsLink> link = repository.getLinkByAsinAndShopTitle(asin, shopTitle);
+    if (link.isPresent()) {
+      return link.get();
+    } else {
+      System.out.println("Not link found");
+      return new SheetsLink();
+    }
   }
 
   public List<SheetsLink> getAll() {

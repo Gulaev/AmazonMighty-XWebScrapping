@@ -7,11 +7,10 @@ import org.testng.TestNG;
 public class Main {
 
   public static void main(String[] args) {
-    TestNG testng = new TestNG();
-
-    List<String> suites = new ArrayList<>();
-    suites.add("src/test/resources/amazon-suite.xml");
-    testng.setTestSuites(suites);
-    testng.run();
+    HiveMindScrapData start = new HiveMindScrapData();
+    start.scrapDataHivemind();
+    start.scrapDataFromAmazonUS();
+    start.scrapDataFromAmazonUK();
+    start.scrapSessions();
   }
 }

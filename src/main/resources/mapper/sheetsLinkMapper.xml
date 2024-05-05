@@ -7,10 +7,11 @@
     <result property="asin" column="asin"/>
     <result property="shopTitle" column="shop_title"/>
     <result property="sheetLink" column="sheet_link"/>
+    <result property="srTitle" column="sr_title"/>
   </resultMap>
 
   <select id="getLinkByAsinAndShopTitle" resultMap="sheetsLinkResultMap">
-    SELECT id, asin, shop_title, sheet_link
+    SELECT id, asin, shop_title, sheet_link, sr_title
     FROM sheets_links
     WHERE asin = #{asin} AND shop_title = #{shopTitle}
   </select>

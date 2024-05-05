@@ -3,7 +3,6 @@ package com.gulaev.amazon.service;
 import com.gulaev.amazon.dao.implementation.AmazonProductRepositoryImpl;
 import com.gulaev.amazon.dao.repository.AmazonProductRepository;
 import com.gulaev.amazon.entity.AmazonProduct;
-import com.gulaev.hivemind.entity.HivemindItem;
 import java.util.List;
 
 public class AmazonProductService {

@@ -1,6 +1,7 @@
 package com.gulaev.amazon.page;
 
 import com.gulaev.amazon.entity.AmazonProduct;
+import com.gulaev.amazon.entity.SheetsLink;
 import com.gulaev.amazon.service.AmazonProductService;
 import com.gulaev.amazon.service.SheetsLinkService;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -91,7 +92,8 @@ public class AmazonProductPage extends AmazonHomePage {
   }
 
   public AmazonProduct mapTitleAndRatingAndUpdate(AmazonProduct product) {
-    product.setTitle(title.getText());
+    SheetsLink productLink = sheetsLinkService.getLinkByAsinAndShopTitle(product.getAsin(), product.getShopTitle());
+//    product.setTitle(title.getText());
     product.setStarRating(getStarRating());
     String currentRateCount = rateCount.isPresent() ? rateCount.getText() : "No Rate Count";
 //    product.setShopTitle(getShopTitle(product.getShopName()));
@@ -101,6 +103,7 @@ public class AmazonProductPage extends AmazonHomePage {
     product.setPrice(getPrice());
     product.setRank(getRank());
     product.setBestSellerRank(getBestSellerRank());
+    product.setTitle(productLink.getSrTitle());
     productService.updateProduct(product);
     return product;
   }
