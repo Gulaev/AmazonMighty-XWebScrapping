@@ -34,7 +34,7 @@ public class HiveMindScrapData extends AbstractTest {
     List<HivemindItem> productItems = new ArrayList<>();
 
     do {
-      pause(30);
+      pause(60);
       List<HivemindItem> itemsOnPage = homePage.getProductItems().stream()
           .map(HivemindProductItemComponent::mapItem).toList();
       productItems.addAll(itemsOnPage);
@@ -81,6 +81,7 @@ public class HiveMindScrapData extends AbstractTest {
     List<AmazonProduct> productWithoutRating = amazonProductService
         .getProductsWhereTitleNullAndShopName("Amazon.co.uk");
     if (!productWithoutRating.isEmpty()) {
+      productPage.openURL(AMAZON_HOME_PAGE);
       productPage.openURL(AMAZON_HOME_PAGE_UK);
       productPage.openURL(MIGTHY_X_UK_URL);
       productPage.openURL(AMAZON_HOME_PAGE_UK);

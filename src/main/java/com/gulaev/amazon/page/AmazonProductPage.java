@@ -56,12 +56,19 @@ public class AmazonProductPage extends AmazonHomePage {
   }
 
   private String getRank() {
+//    if (rank.isPresent()) {
+//      return "#1 Best Seller";
+//    } else {
+//      return "No Rank";
+//    }
     WebDriver driver = getDriver();
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
     try {
-      WebElement rankElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("rankElementId")));
-      return rankElement.getText();
+      WebElement rankElement = wait.until(
+          ExpectedConditions.presenceOfElementLocated(
+              By.xpath("//*[@id='zeitgeistBadge_feature_div']//i[@class='a-icon a-icon-addon p13n-best-seller-badge']")));
+      return "#1 Best Seller";
     } catch (TimeoutException e) {
       return "No Rank";
     }
